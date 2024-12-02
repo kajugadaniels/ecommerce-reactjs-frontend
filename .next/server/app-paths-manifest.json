@@ -1,6 +1,6 @@
 {
-  "/(user)/page": "app/(user)/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/(user)/latest/page": "app/(user)/latest/page.js",
-  "/(user)/unisex/page": "app/(user)/unisex/page.js",
-  "/(user)/men/page": "app/(user)/men/page.js"
+  "/(user)/page": "app/(user)/page.js"
 }
