@@ -1,8 +1,8 @@
-import axios from "axios";
-import apiCaller from "./axiosHelper";
-import Cookies from "js-cookie";
+import axios from 'axios';
+import apiCaller from './axiosHelper';
+import Cookies from 'js-cookie';
 
-const token = Cookies.get("token");
+const token = Cookies.get('token');
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -19,8 +19,8 @@ export const PostData = async (url: string, data: any) => {
   try {
     const response = await apiCaller.post(`${baseURL}${url}`, data, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: token !== undefined ? `Bearer ${token}` : "",
+        'Content-Type': 'application/json',
+        Authorization: token !== undefined ? `Bearer ${token}` : '',
       },
     });
     return response;
@@ -33,7 +33,7 @@ export const putData = async (url: string, data: any) => {
   try {
     const response = await apiCaller.put(`${baseURL}${url}`, data, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
     return response;
@@ -46,7 +46,7 @@ export const postRequestFormData = async (url: string, data: any) => {
   try {
     const response = await apiCaller.post(`${baseURL}${url}`, data, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
     return response;
@@ -59,7 +59,7 @@ export const putRequestFormData = async (url: string, data: any) => {
   try {
     const response = await apiCaller.put(`${baseURL}${url}`, data, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
     return response;
@@ -90,7 +90,7 @@ export const PostNotAuth = async (url: string, data: any) => {
   try {
     const response = await axios.post(`${baseURL}${url}`, data, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
     return response;

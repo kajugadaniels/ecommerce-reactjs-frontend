@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,31 +13,35 @@ const Header: React.FC = () => {
   };
 
   const menuItems = [
-    { name: "Our Story", route: "/" },
-    { name: "Latest", route: "/latest" },
-    { name: "Unisex", route: "/unisex" },
-    { name: "Men", route: "/men" },
-    { name: "Women", route: "/women" },
-    { name: "Sign In", route: "/signin" },
+    { name: 'Our Story', route: '/' },
+    { name: 'Latest', route: '/latest' },
+    { name: 'Unisex', route: '/unisex' },
+    { name: 'Men', route: '/men' },
+    { name: 'Women', route: '/women' },
+    { name: 'Sign In', route: '/signin' },
   ];
 
   return (
-    <header className="flex shadow-md py-4 px-4 sm:px-10 bg-black font-sans min-h-[80px] tracking-wide relative z-50">
-      <div className="flex flex-wrap items-center w-full gap-5">
+    <header className="relative z-50 flex min-h-[80px] bg-black px-4 py-4 font-sans tracking-wide shadow-md sm:px-10">
+      <div className="flex w-full flex-wrap items-center gap-5">
         <Link href="/">
-          <img src="/logo/white-logo.png" className="w-40 max-lg:mr-5" alt="Logo" />
+          <img
+            src="/logo/white-logo.png"
+            className="w-40 max-lg:mr-5"
+            alt="Logo"
+          />
         </Link>
 
         {/* Menu for large devices */}
-        <nav className="hidden lg:flex lg:ml-auto">
+        <nav className="hidden lg:ml-auto lg:flex">
           <ul className="flex gap-4">
             {menuItems.map((item) => (
               <li key={item.name} className="px-3">
                 <Link
                   href={item.route}
                   className={`hover:text-[#D87D4A] ${
-                    item.route === pathname ? "text-[#D87D4A]" : "text-[#fff]"
-                  } font-semibold block text-[15px]`}
+                    item.route === pathname ? 'text-[#D87D4A]' : 'text-[#fff]'
+                  } block text-[15px] font-semibold`}
                 >
                   {item.name}
                 </Link>
@@ -57,7 +61,7 @@ const Header: React.FC = () => {
               aria-label="Open Menu"
             >
               <svg
-                className="w-7 h-7"
+                className="h-7 w-7"
                 fill="#fff"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,13 +79,13 @@ const Header: React.FC = () => {
           {isMenuOpen && (
             <button
               id="toggleClose"
-              className="lg:hidden fixed top-4 right-4 z-[100] rounded-full bg-white p-2"
+              className="fixed right-4 top-4 z-[100] rounded-full bg-white p-2 lg:hidden"
               onClick={handleToggleMenu}
               aria-label="Close Menu"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 fill-black"
+                className="h-4 w-4 fill-black"
                 viewBox="0 0 320.591 320.591"
               >
                 <path d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z" />
@@ -100,18 +104,18 @@ const Header: React.FC = () => {
         )}
 
         <div
-          className={`fixed top-0 left-0 w-3/4 max-w-xs h-full bg-white z-50 transform ${
-            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          className={`fixed left-0 top-0 z-50 h-full w-3/4 max-w-xs transform bg-white ${
+            isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 ease-in-out lg:hidden`}
         >
-          <ul className="flex flex-col p-6 space-y-4">
+          <ul className="flex flex-col space-y-4 p-6">
             {menuItems.map((item) => (
-              <li key={item.name} className="py-3 border-b">
+              <li key={item.name} className="border-b py-3">
                 <Link
                   href={item.route}
                   className={`hover:text-[#D87D4A] ${
-                    item.route === pathname ? "text-[#D87D4A]" : "text-[#000]"
-                  } font-semibold text-lg`}
+                    item.route === pathname ? 'text-[#D87D4A]' : 'text-[#000]'
+                  } text-lg font-semibold`}
                   onClick={() => setIsMenuOpen(false)} // Close menu on link click
                 >
                   {item.name}

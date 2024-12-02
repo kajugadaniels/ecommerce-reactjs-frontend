@@ -1,18 +1,16 @@
-import Footer from "@/components/Footer"
-import Header from "@/components/Header"
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export default function UserLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode;
 }) {
-    return (
-        <div>
-            <Header />
-            <main>
-                {children}
-            </main>
-            <Footer />
-        </div>
-    )
+  return (
+    <div>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </div>
+  );
 }

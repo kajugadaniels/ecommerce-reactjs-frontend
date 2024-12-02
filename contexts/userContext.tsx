@@ -1,5 +1,5 @@
-"use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+'use client';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -16,9 +16,9 @@ type userContextType = {
 };
 
 const defaultUserData: userData = {
-  firstname: "",
-  lastname: "",
-  email: "",
+  firstname: '',
+  lastname: '',
+  email: '',
 };
 
 const userContext = createContext<userContextType>({
