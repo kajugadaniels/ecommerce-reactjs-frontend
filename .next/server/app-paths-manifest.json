@@ -1,4 +1,6 @@
 {
-  "/(user)/page": "app/(user)/page.js",
-  "/(user)/checkout/page": "app/(user)/checkout/page.js"
+  "/(user)/checkout/page": "app/(user)/checkout/page.js",
+  "/(user)/track/page": "app/(user)/track/page.js",
+  "/(user)/unisex/page": "app/(user)/unisex/page.js",
+  "/(user)/page": "app/(user)/page.js"
 }
