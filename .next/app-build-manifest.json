@@ -11,10 +11,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/layout.js"
     ],
-    "/(user)/latest/page": [
+    "/(user)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/latest/page.js"
+      "static/chunks/app/(user)/page.js"
+    ],
+    "/(user)/checkout/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(user)/checkout/page.js"
     ]
   }
 }

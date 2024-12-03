@@ -1,3 +1,4 @@
 {
-  "/(user)/latest/page": "app/(user)/latest/page.js"
+  "/(user)/page": "app/(user)/page.js",
+  "/(user)/checkout/page": "app/(user)/checkout/page.js"
 }
