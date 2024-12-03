@@ -1,5 +1,3 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/(user)/latest/detail/page": "app/(user)/latest/detail/page.js",
   "/(user)/track/page": "app/(user)/track/page.js"
 }

@@ -2,21 +2,21 @@
 
     const page = () => {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-black p-8">
+        <div className="flex min-h-screen items-center justify-center bg-black  gap-24">
       {/* Left Section: Checkout Form */}
-      <div className="w-full max-w-2xl rounded-lg bg-white p-8 shadow-lg">
+      <div className="w-full max-w-4xl rounded-lg bg-white p-16 shadow-lg">
         <h2 className="mb-6 text-2xl font-semibold text-gray-800">CHECKOUT</h2>
         
         {/* Shipping Info */}
         <div className="mb-6">
           <h3 className="text-lg font-medium text-gray-800">SHIPPING INFO</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-600">Full Name*</label>
               <input
-                type="text"
+                type="text" 
                 placeholder="Enter Full Name"
-                className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500"
+                className="w-full rounded border border-gray-300 p-3  text-gray-800 focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <div>
@@ -24,25 +24,25 @@
               <input
                 type="text"
                 placeholder="+250"
-                className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500"
+                className="w-full  rounded border border-gray-300 p-3 text-gray-800 focus:ring-2 focus:ring-orange-500"
               />
             </div>
           </div>
           <div className="mt-4">
             <label className="block text-sm font-medium text-gray-600">Address*</label>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <select className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500">
+              <select className="w-full rounded border border-gray-300 p-3 text-gray-800 focus:ring-2 focus:ring-orange-500">
                 <option>Select Country</option>
                 {/* Add more options here */}
               </select>
-              <select className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500">
+              <select className="w-full rounded border border-gray-300 p-3 text-gray-800 focus:ring-2 focus:ring-orange-500">
                 <option>Select City</option>
                 {/* Add more options here */}
               </select>
               <input
                 type="text"
                 placeholder="Enter Full Address"
-                className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500"
+                className="w-full rounded border border-gray-300 p-3 text-gray-800 focus:ring-2 focus:ring-orange-500"
               />
             </div>
           </div>
@@ -52,7 +52,7 @@
         <div>
           <h3 className="mb-4 text-lg font-medium text-gray-800">BILLING DETAILS</h3>
           <div className="mb-4 flex items-center gap-4">
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 text-black">
               <input
                 type="radio"
                 name="payment"
@@ -77,7 +77,7 @@
               <input
                 type="text"
                 placeholder="Enter cardholder name"
-                className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500"
+                className="w-full rounded border border-gray-300 p-3 text-gray-800 focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <div>
@@ -85,7 +85,7 @@
               <input
                 type="text"
                 placeholder="4111 1111 1111"
-                className="w-full rounded border border-gray-300 p-2 text-gray-800 focus:ring-2 focus:ring-orange-500"
+                className="w-full rounded border border-gray-300 p-3 text-gray-800 focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <div>
