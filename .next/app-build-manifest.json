@@ -11,10 +11,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/layout.js"
     ],
-    "/(user)/track/page": [
+    "/(user)/latest/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/track/page.js"
+      "static/chunks/app/(user)/latest/page.js"
     ]
   }
 }
