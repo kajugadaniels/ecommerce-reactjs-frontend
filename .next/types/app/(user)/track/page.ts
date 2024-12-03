@@ -1,8 +1,8 @@
-// File: /Users/uhiriweolivine/Documents/nexcode/enso-client/app/(user)/page.tsx
-import * as entry from '../../../../app/(user)/page.js'
+// File: /Users/uhiriweolivine/Documents/nexcode/enso-client/app/(user)/track/page.tsx
+import * as entry from '../../../../../app/(user)/track/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../app/(user)/page.js')
+type TEntry = typeof import('../../../../../app/(user)/track/page.js')
 
 type SegmentParams<T extends Object = any> = T extends Record<string, any>
   ? { [K in keyof T]: T[K] extends string ? string | string[] | undefined : never }
