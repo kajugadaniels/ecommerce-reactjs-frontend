@@ -11,15 +11,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/layout.js"
     ],
-    "/(user)/checkout/page": [
+    "/(user)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/checkout/page.js"
-    ],
-    "/(user)/track/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(user)/track/page.js"
+      "static/chunks/app/(user)/page.js"
     ],
     "/(user)/latest/page": [
       "static/chunks/webpack.js",
@@ -31,10 +26,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/unisex/page.js"
     ],
-    "/(user)/page": [
+    "/(user)/men/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/page.js"
+      "static/chunks/app/(user)/men/page.js"
+    ],
+    "/(user)/women/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(user)/women/page.js"
+    ],
+    "/(user)/latest/detail/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(user)/latest/detail/page.js"
+    ],
+    "/(user)/track/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(user)/track/page.js"
     ]
   }
 }
