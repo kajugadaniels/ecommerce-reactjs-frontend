@@ -35,16 +35,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/women/page.js"
-    ],
-    "/(user)/latest/detail/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(user)/latest/detail/page.js"
-    ],
-    "/(user)/track/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(user)/track/page.js"
     ]
   }
 }
