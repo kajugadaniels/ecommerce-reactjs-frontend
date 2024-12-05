@@ -1,3 +1,9 @@
 {
-  "/(user)/women/page": "app/(user)/women/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(user)/signin/page": "app/(user)/signin/page.js",
+  "/(user)/track/page": "app/(user)/track/page.js",
+  "/(user)/men/page": "app/(user)/men/page.js",
+  "/(user)/women/page": "app/(user)/women/page.js",
+  "/(user)/unisex/page": "app/(user)/unisex/page.js",
+  "/(user)/latest/page": "app/(user)/latest/page.js"
 }

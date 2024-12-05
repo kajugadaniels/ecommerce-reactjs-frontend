@@ -1,17 +1,40 @@
-    import React from 'react'
+import React from 'react';
 
-    const page = () => {
-    return (
-        <div className="bg-black text-white min-h-screen p-32">
+const page = () => {
+  return (
+    <div className="bg-black text-white min-h-screen p-32">
       {/* Back Button */}
       <button className="text-orange-500 font-bold mb-6">
         <span className="mr-2">🔙</span> BACK
       </button>
 
-      {/* Title */}
-      <h2 className="text-center text-orange-500 text-xl font-semibold mb-8">
-        ORDER DETAILS
-      </h2>
+      {/* Title and Buttons */}
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-center text-orange-500 text-xl font-semibold">
+          ORDER DETAILS
+        </h2>
+        <div className="flex space-x-4">
+          {/* Invoice Button */}
+          <button className="bg-orange-500 text-white px-4 py-2 rounded font-bold">
+            Invoice
+          </button>
+          {/* Track Order Button */}
+          <button className="bg-green-500 text-white px-4 py-2 rounded font-bold">
+            Track Order
+          </button>
+        </div>
+      </div>
+
+      {/* Order Header */}
+      <div className="bg-gray-800 p-6 rounded-lg mb-12">
+        <div className="flex justify-between items-center">
+          <span>Order ID: <span className="font-bold">3354654654526</span></span>
+          <span>Order Date: <span className="font-bold">Nov 19, 2024</span></span>
+        </div>
+        <div className="text-right">
+          Estimated Delivery: <span className="text-green-500 font-bold">Dec 16, 2024</span>
+        </div>
+      </div>
 
       {/* Order Timeline */}
       <div className="flex items-center justify-between mb-12">
@@ -55,7 +78,10 @@
 
       {/* Horizontal Line for Progress */}
       <div className="w-full h-[2px] bg-gray-600 relative mb-12">
-        <div className="absolute top-0 left-0 h-[2px] bg-green-500" style={{ width: '40%' }}></div>
+        <div
+          className="absolute top-0 left-0 h-[2px] bg-green-500"
+          style={{ width: '40%' }}
+        ></div>
       </div>
 
       {/* Details Section */}
@@ -66,7 +92,9 @@
           <div className="mb-6">
             <h3 className="text-lg font-bold mb-4">PAYMENT</h3>
             <div className="flex items-center">
-              <div className="bg-blue-500 text-white px-3 py-1 rounded mr-3">VISA</div>
+              <div className="bg-blue-500 text-white px-3 py-1 rounded mr-3">
+                VISA
+              </div>
               <span className="text-gray-400">Visa **56</span>
             </div>
           </div>
@@ -95,38 +123,66 @@
 
         {/* Right Side: Product Image and Summary */}
         <div>
-          {/* Product Image */}
-          <div className="flex justify-center mb-6">
-            <img
-              src="/products/product-5.png"
-              alt="Kimono"
-              className="w-48 h-auto object-contain"
-            />
+          {/* Product List */}
+          <div className="mb-6">
+            {[1, 2, 3].map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between border-b border-gray-600 pb-4 mb-4"
+              >
+                <img
+                  src="/products/product-5.png"
+                  alt="Kimono"
+                  className="w-16 h-auto object-contain"
+                />
+                <div>
+                  <div className="font-bold">Kimono</div>
+                  <div className="text-gray-400">Size: S</div>
+                </div>
+                <div className="text-gray-400">$2598</div>
+              </div>
+            ))}
           </div>
 
           {/* Summary */}
           <div className="text-gray-400">
             <div className="flex justify-between mb-2">
-              <span>Number of Kimonos</span>
-              <span>2</span>
+              <span>Discount</span>
+              <span>-$554</span>
             </div>
             <div className="flex justify-between mb-2">
-              <span>AMOUNT</span>
-              <span>$5,396</span>
+              <span>Tax</span>
+              <span>$223</span>
             </div>
             <div className="flex justify-between mb-2">
-              <span>SHIPPING</span>
+              <span>Shipping</span>
               <span>$50</span>
             </div>
             <div className="flex justify-between text-white font-bold mt-4">
-              <span>GRAND TOTAL</span>
-              <span>$5,446</span>
+              <span>Grand Total</span>
+              <span>$0</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    )
-    }
 
-    export default page
+      {/* Help Section */}
+      <div className="mt-12">
+        <h3 className="text-lg font-bold mb-4">Need Help?</h3>
+        <div className="flex space-x-4">
+          <a href="#" className="text-orange-500 underline">
+            Order Issues
+          </a>
+          <a href="#" className="text-orange-500 underline">
+            Delivery Info
+          </a>
+          <a href="#" className="text-orange-500 underline">
+            Returns
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default page;

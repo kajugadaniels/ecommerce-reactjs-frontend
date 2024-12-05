@@ -2,7 +2,7 @@ import React from 'react';
 
 const Women = () => {
   return <div>
-    <div className="bg-gray-900 text-white">
+    <div className="bg-gray-900  text-white">
       {/* Hero Section */}
       <div className="relative">
         <img
@@ -14,6 +14,7 @@ const Women = () => {
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">MEN COLLECTIONS</h1>
             <p className="text-gray-300 max-w-2xl mx-auto">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Explore our carefully curated collection of modern styles. Elevate your wardrobe with the best of men's fashion.
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Explore our carefully curated collection of modern styles. Elevate your wardrobe with the best of men's fashion.
             </p>
           </div>
@@ -45,7 +46,7 @@ const Women = () => {
     {/* Product Card 2 */}
     <div className="bg-gray-800 p-4 rounded">
       <img
-        src="/products/product-3.png" // Replace with actual image path
+        src="/products/product-3.png" 
         alt="Patry 2"
         className="h-[250px] object-cover mb-4"
       />
@@ -60,7 +61,7 @@ const Women = () => {
     {/* Product Card 3 */}
     <div className="bg-gray-800 p-4 rounded">
       <img
-        src="/products/product-3.png" // Replace with actual image path
+        src="/products/product-3.png" 
         alt="Patry 3"
         className="h-[250px] object-cover mb-4"
       />
