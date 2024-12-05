@@ -5,10 +5,10 @@ const Register = () => {
     <div
       className="h-screen flex items-center justify-center bg-cover bg-center"
       style={{
-        backgroundImage: "url('/products/aut_background.png')", // Replace with your background image path
+        backgroundImage: "url('/products/aut_background.png')", 
       }}
     >
-      <div className="bg-black bg-opacity-70 p-8 rounded-lg shadow-lg w-96">
+      <div className="bg-black bg-opacity-70 p-32 rounded-lg shadow-lg w-[800px]">
         {/* Title */}
         <h2 className="text-white text-2xl font-bold text-center mb-4">Sign Up</h2>
         <p className="text-gray-400 text-center mb-6">
@@ -21,7 +21,7 @@ const Register = () => {
           <input
             type="text"
             placeholder="First Name"
-            className="w-full mb-4 px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full mb-4 px-10 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
 
           {/* Last Name */}
