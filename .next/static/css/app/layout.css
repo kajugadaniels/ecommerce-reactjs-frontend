@@ -1329,6 +1329,15 @@ video {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.opacity-10 {
+  opacity: 0.1;
+}
+.opacity-5 {
+  opacity: 0.05;
+}
+.opacity-60 {
+  opacity: 0.6;
+}
 .shadow-\[0_4px_12px_-5px_rgba\(0\2c 0\2c 0\2c 0\.4\)\] {
   --tw-shadow: 0 4px 12px -5px rgba(0,0,0,0.4);
   --tw-shadow-colored: 0 4px 12px -5px var(--tw-shadow-color);

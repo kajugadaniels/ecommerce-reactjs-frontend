@@ -3,7 +3,7 @@ import React from 'react';
 const Login = () => {
   return <div>
     <div
-      className="h-screen flex items-center justify-center bg-cover bg-center"
+      className="h-screen flex items-center justify-center bg-cover bg-center opacity-60"
       style={{
         backgroundImage: "url('/products/aut_background.png')", 
       }}

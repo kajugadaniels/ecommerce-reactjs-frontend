@@ -3,7 +3,7 @@ import React from 'react';
 const Register = () => {
   return <div>
     <div
-      className="h-screen flex items-center justify-center bg-cover bg-center"
+      className="h-screen flex items-center justify-center bg-cover bg-center opacity-60"
       style={{
         backgroundImage: "url('/products/aut_background.png')", 
       }}
@@ -68,7 +68,7 @@ const Register = () => {
           </button>
         </form>
 
-        {/* Additional Links */}
+        {/* Additional Links
         <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
           <label className="flex items-center">
             <input
@@ -80,12 +80,12 @@ const Register = () => {
           <a href="#" className="text-orange-500 hover:underline">
             Forgot password?
           </a>
-        </div>
+        </div> */}
 
         {/* Login Link */}
         <p className="text-center text-gray-400 mt-6">
           Have an account?{" "}
-          <a href="/login" className="text-orange-500 hover:underline">
+          <a href="/signin" className="text-orange-500 hover:underline">
             Log in
           </a>
         </p>
