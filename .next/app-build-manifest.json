@@ -11,15 +11,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/layout.js"
     ],
-    "/(user)/women/page": [
+    "/(user)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/women/page.js"
+      "static/chunks/app/(user)/page.js"
     ],
-    "/(user)/signin/page": [
+    "/(user)/latest/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/signin/page.js"
+      "static/chunks/app/(user)/latest/page.js"
     ],
     "/(user)/unisex/page": [
       "static/chunks/webpack.js",
@@ -31,10 +31,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(user)/men/page.js"
     ],
-    "/(user)/latest/page": [
+    "/(user)/women/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(user)/latest/page.js"
+      "static/chunks/app/(user)/women/page.js"
     ],
     "/(user)/track/page": [
       "static/chunks/webpack.js",
