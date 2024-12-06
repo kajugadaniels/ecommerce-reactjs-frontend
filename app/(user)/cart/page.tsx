@@ -23,8 +23,9 @@ import React, { useState } from "react";
             "M 11 / W 12.5",
           ];
     return (
+        <div className="bg-black">
         <div className="flex gap-52 bg-black">
-            <div className="bg-black min-h-screen flex justify-center items-center pl-80 mt-[-300px]">
+            <div className=" min-h-screen flex justify-center items-center pl-80 mt-[-300px]">
 
   <div className="relative flex">
     
@@ -191,8 +192,83 @@ import React, { useState } from "react";
         </button>
       </div>
     </div>
+    </div>
 
+    <div className="mt-10 flex items-center justify-between px-4 sm:px-12 md:px-24 lg:px-72">
+        <div className="text-xl font-bold">
+          You Might Also Like
         </div>
+        <div className="flex items-center">
+          <div className="h-6 w-6 rounded-full bg-white mr-2"> </div>
+          <div className="h-6 w-6 rounded-full bg-white"></div>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 mt-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          {/* Repeated Kimono Display Blocks */}
+          {/* Example Block */}
+          <div className="overflow-hidden rounded-lg bg-gray-300 font-[sans-serif] shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)]">
+            <div className="flex min-h-[256px] items-center justify-center">
+              <img
+                src="/products/product-5.png"
+                alt="Name"
+                className="w-[100%] object-contain"
+              />
+            </div>
+            <div className="bg-white p-6">
+              <h3 className="text-[#D87D4A]">Customize</h3>
+              <h3 className="text-gray-800">Hudy Kimono</h3>
+              <p className="mt-2 text-sm text-gray-700">
+                5 Colors &middot; 3 Fabrics
+              </p>
+              <div className="mt-4 text-lg font-semibold text-gray-700">
+                $160
+              </div>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-lg bg-gray-300 font-[sans-serif] shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)]">
+            <div className="flex min-h-[256px] items-center justify-center">
+              <img
+                src="/products/product-5.png"
+                alt="Name"
+                className="w-[100%] object-contain"
+              />
+            </div>
+            <div className="bg-white p-6">
+              <h3 className="text-[#D87D4A]">Customize</h3>
+              <h3 className="text-gray-800">Hudy Kimono</h3>
+              <p className="mt-2 text-sm text-gray-700">
+                5 Colors &middot; 3 Fabrics
+              </p>
+              <div className="mt-4 text-lg font-semibold text-gray-700">
+                $160
+              </div>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-lg bg-gray-300 font-[sans-serif] shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)]">
+            <div className="flex min-h-[256px] items-center justify-center">
+              <img
+                src="/products/product-5.png"
+                alt="Name"
+                className="w-[100%] object-contain"
+              />
+            </div>
+            <div className="bg-white p-6">
+              <h3 className="text-[#D87D4A]">Customize</h3>
+              <h3 className="text-gray-800">Hudy Kimono</h3>
+              <p className="mt-2 text-sm text-gray-700">
+                5 Colors &middot; 3 Fabrics
+              </p>
+              <div className="mt-4 text-lg font-semibold text-gray-700">
+                $160
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+        
     )
     }
 
