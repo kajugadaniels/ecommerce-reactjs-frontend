@@ -6,8 +6,8 @@ const Home = () => {
     <>
       <Hero />
 
-      <div className="bg-black pb-10 pt-10 font-sans">
-        <div className="container mx-auto px-4 lg:px-24">
+      <div className="pt-10 pb-10 font-sans bg-black">
+        <div className="container px-4 mx-auto lg:px-24">
           <div className="mb-12 text-center">
             <h2 className="text-lg font-semibold text-[#D87D4A] sm:text-xl">
               Enso By You
@@ -15,13 +15,13 @@ const Home = () => {
             <h1 className="mb-4 text-3xl font-extrabold text-[#D87D4A] sm:text-4xl">
               Enso Collections Wardrobe
             </h1>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-white sm:max-w-2xl">
+            <p className="max-w-xl mx-auto mt-2 text-sm text-white sm:max-w-2xl">
               Let's find out! Be just who you are by putting more youness in
               your kimononess with Enso By You, Enso co-creation service for
               Members. A little more of this, a little less of that—just have
               fun customizing a shoe that feels more like you.
             </p>
-            <button className="mt-4 rounded-full bg-white px-8 py-3 text-black transition hover:bg-gray-200 sm:px-16 sm:py-4">
+            <button className="px-8 py-3 mt-4 text-black transition bg-white rounded-full hover:bg-gray-200 sm:px-16 sm:py-4">
               Shop
             </button>
             <h2 className="mt-8 text-3xl font-extrabold text-[#D87D4A] sm:text-4xl">
@@ -30,45 +30,48 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {Array(4)
-              .fill(0)
-              .map((_, idx) => (
-                <div
-                  key={idx}
-                  className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
-                >
-                  <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 h-[210px] w-5/6 overflow-hidden md:mb-2">
-                    <img
-                      src={`/products/product-${idx + 1}.png`}
-                      alt="Name"
-                      className="w-full object-contain"
-                    />
-                  </div>
-                  <div className="h-[80px] rounded-xl bg-white px-10">
-                    <h3 className="pt-2 text-center text-lg font-extrabold text-gray-800">
-                      Name
-                    </h3>
-                  </div>
-                </div>
-              ))}
+      {Array(4)
+        .fill(0)
+        .map((_, idx) => (
+          <div
+            key={idx}
+            className="relative p-5 transition-all shadow-lg cursor-pointer rounded-2xl hover:-translate-y-2"
+            style={{
+              background: 'linear-gradient(to bottom, #000000 50%, #FFFFFF 50%)',
+            }}
+          >
+            <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 h-[210px] w-5/6 overflow-hidden md:mb-2">
+              <img
+                src={`/products/product-${idx + 1}.png`}
+                alt={`Product ${idx + 1}`}
+                className="object-contain w-full"
+              />
+            </div>
+            <div className="flex items-center justify-center px-10 py-2">
+              <h3 className="text-lg font-extrabold text-center text-gray-800">
+                Product Name
+              </h3>
+            </div>
           </div>
+        ))}
+    </div>
         </div>
       </div>
 
-      <div className="bg-black pb-10 pt-10 font-sans">
-        <div className="container mx-auto px-4 lg:px-24">
+      <div className="pt-10 pb-10 font-sans bg-black">
+        <div className="container px-4 mx-auto lg:px-24">
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-3xl font-extrabold text-white sm:text-4xl">
               Choose a So-You Kimono
             </h1>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-white sm:max-w-2xl">
+            <p className="max-w-xl mx-auto mt-2 text-sm text-white sm:max-w-2xl">
               Whether you’re remixing a classic into something never seen before
               or simplifying the latest drop into a totally neutral palette,
               your customization journey starts with choosing a shoe. Luckily,
               we’re always adding newness so you can find the just-right way to
               express your style.
             </p>
-            <button className="mt-4 rounded-full bg-white px-8 py-3 text-black transition hover:bg-gray-200 sm:px-16 sm:py-4">
+            <button className="px-8 py-3 mt-4 text-black transition bg-white rounded-full hover:bg-gray-200 sm:px-16 sm:py-4">
               Start Customizing
             </button>
           </div>
@@ -90,7 +93,7 @@ const Home = () => {
               <div className="flex-shrink-0">
                 <img
                   src="/products/product-2.png"
-                  className="h-auto w-full object-cover"
+                  className="object-cover w-full h-auto"
                   alt="Product"
                 />
               </div>
@@ -100,7 +103,7 @@ const Home = () => {
               <div className="flex-shrink-0">
                 <img
                   src="/products/product-3.png"
-                  className="h-auto w-full object-cover"
+                  className="object-cover w-full h-auto"
                   alt="Product"
                 />
               </div>
@@ -122,19 +125,19 @@ const Home = () => {
       className="h-[100vh] w-full bg-cover bg-center"
       style={{ backgroundImage: "url('/hero/image.png')" }}
     >
-            <div className="relative left-8 top-16 w-full max-w-xs rounded-lg bg-white p-5 shadow-lg sm:left-32 sm:top-24 sm:w-80">
+            <div className="relative w-full max-w-xs p-5 bg-white rounded-lg shadow-lg left-8 top-16 sm:left-32 sm:top-24 sm:w-80">
               <img
                 src="/products/product-5.png"
                 alt="Customizable Product"
-                className="mb-4 h-auto w-full"
+                className="w-full h-auto mb-4"
               />
 
               <div className="text-center">
-                <div className="mb-4 flex items-center justify-between">
+                <div className="flex items-center justify-between mb-4">
                   <button className="text-gray-600">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -151,7 +154,7 @@ const Home = () => {
                   <button className="text-gray-600">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -166,22 +169,22 @@ const Home = () => {
                   </button>
                 </div>
 
-                <div className="mb-4 flex justify-center gap-2">
-                  <button className="rounded-full border border-gray-300 px-4 py-2 text-sm text-black">
+                <div className="flex justify-center gap-2 mb-4">
+                  <button className="px-4 py-2 text-sm text-black border border-gray-300 rounded-full">
                     Leather
                   </button>
-                  <button className="rounded-full border border-gray-300 px-4 py-2 text-sm text-black">
+                  <button className="px-4 py-2 text-sm text-black border border-gray-300 rounded-full">
                     Canvas
                   </button>
                 </div>
 
-                <div className="mb-4 flex justify-center gap-2">
-                  <span className="block h-6 w-6 rounded-full border border-gray-300 bg-pink-300"></span>
-                  <span className="block h-6 w-6 rounded-full border border-gray-300 bg-yellow-400"></span>
-                  <span className="block h-6 w-6 rounded-full border border-gray-300 bg-green-500"></span>
+                <div className="flex justify-center gap-2 mb-4">
+                  <span className="block w-6 h-6 bg-pink-300 border border-gray-300 rounded-full"></span>
+                  <span className="block w-6 h-6 bg-yellow-400 border border-gray-300 rounded-full"></span>
+                  <span className="block w-6 h-6 bg-green-500 border border-gray-300 rounded-full"></span>
                 </div>
 
-                <button className="rounded-full bg-black px-8 py-2 text-white transition hover:bg-gray-800">
+                <button className="px-8 py-2 text-white transition bg-black rounded-full hover:bg-gray-800">
                   Done
                 </button>
               </div>
@@ -191,63 +194,63 @@ const Home = () => {
             <h1 className="mb-4 text-3xl font-semibold text-white sm:text-4xl">
               What's your PHD?
             </h1>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-white sm:max-w-2xl">
+            <p className="max-w-xl mx-auto mt-2 text-sm text-white sm:max-w-2xl">
               Like your shoe signature, your Personal I.D. is any combo of
               letters and numbers that rep you. Maybe it's a nickname, a mantra,
               or your computer password. Pick your P.I.D., and show the world
               who this signature shoe belongs to.
             </p>
-            <button className="mt-4 rounded-full bg-white px-8 py-3 text-black transition hover:bg-gray-200 sm:px-16 sm:py-4">
+            <button className="px-8 py-3 mt-4 text-black transition bg-white rounded-full hover:bg-gray-200 sm:px-16 sm:py-4">
               Custom
             </button>
           </div>
-          <div className="mt-24 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 mt-24 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {/* Products Section */}
 
             <div
 
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
+              className="relative p-5 transition-all bg-transparent cursor-pointer rounded-2xl hover:-translate-y-2"
             >
-              <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
+              <div className="mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8">
                 <img
                   src="/products/product-6.png"
-                  className="h-auto w-full object-cover"
+                  className="object-cover w-full h-auto"
                   alt="Product"
                 />
               </div>
             </div>
             <div
 
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
+              className="relative p-5 transition-all bg-transparent cursor-pointer rounded-2xl hover:-translate-y-2"
             >
-              <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
+              <div className="mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8">
                 <img
                   src="/products/product-6.png"
-                  className="h-auto w-full object-cover"
+                  className="object-cover w-full h-auto"
                   alt="Product"
                 />
               </div>
             </div>
             <div
 
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
+              className="relative p-5 transition-all bg-transparent cursor-pointer rounded-2xl hover:-translate-y-2"
             >
-              <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
+              <div className="mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8">
                 <img
                   src="/products/product-6.png"
-                  className="h-auto w-full object-cover"
+                  className="object-cover w-full h-auto"
                   alt="Product"
                 />
               </div>
             </div>
             <div
 
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
+              className="relative p-5 transition-all bg-transparent cursor-pointer rounded-2xl hover:-translate-y-2"
             >
-              <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
+              <div className="mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8">
                 <img
                   src="/products/product-6.png"
-                  className="h-auto w-full object-cover"
+                  className="object-cover w-full h-auto"
                   alt="Product"
                 />
               </div>
@@ -259,24 +262,24 @@ const Home = () => {
             The Team
           </h2>
 
-          <div className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 mt-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {/* Team Section */}
             {Array(3)
               .fill(0)
               .map((_, index) => (
                 <div
                   key={index}
-                  className="relative flex cursor-pointer items-end justify-center rounded-2xl bg-transparent p-5 hover:-translate-y-2"
+                  className="relative flex items-end justify-center p-5 bg-transparent cursor-pointer rounded-2xl hover:-translate-y-2"
                   style={{ height: '350px' }}
                 >
-                  <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 transform">
+                  <div className="absolute top-0 transform -translate-x-1/2 left-1/2 -translate-y-1/3">
                     <img
                       src="/hero/team.png"
                       alt="Team Member"
-                      className="mt-16 h-auto w-28 sm:w-36 md:w-40 object-contain"
+                      className="object-contain h-auto mt-16 w-28 sm:w-36 md:w-40"
                     />
                   </div>
-                  <div className="h-40 w-full max-w-sm rounded-xl bg-white p-4 text-center text-black shadow-lg md:h-52">
+                  <div className="w-full h-40 max-w-sm p-4 text-center text-black bg-white shadow-lg rounded-xl md:h-52">
                     <div className="mt-16 md:mt-32">
                       <p className="text-lg font-semibold text-black md:text-xl">
                         Name
