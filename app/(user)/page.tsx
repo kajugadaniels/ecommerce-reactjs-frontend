@@ -130,7 +130,7 @@ const Home = () => {
                     
                     <div
                         className="w-full bg-cover bg-center h-screen sm:h-[70vh] flex items-center justify-center"
-                        style={{ backgroundImage: "url('/hero/image.png')" }}
+                        style={{ backgroundImage: "url('/hero/girl.png')" }}
                     >
                         <div className="relative w-full max-w-xs bg-white rounded-lg shadow-lg p-5 pt-[10%] pb-[10%] sm:p-8 sm:pt-5 sm:pb-5 sm:w-80">
                             <img
