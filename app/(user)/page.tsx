@@ -96,7 +96,7 @@ const Home = () => {
                             <div className="flex-shrink-0 mt-4 sm:mt-0 sm:ml-4">
                                 <img
                                     src="/products/product-2.png"
-                                    className="object-cover w-full h-48 sm:h-full"
+                                    className="object-cover w-full h-48 sm:w-auto sm:h-full"
                                     alt="Product"
                                 />
                             </div>
@@ -107,7 +107,7 @@ const Home = () => {
                             <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
                                 <img
                                     src="/products/product-3.png"
-                                    className="object-cover w-full h-48 sm:h-full"
+                                    className="object-cover w-full h-48 sm:w-auto sm:h-full"
                                     alt="Product"
                                 />
                             </div>
@@ -127,16 +127,17 @@ const Home = () => {
                     </div>
 
                     {/* Optional Hero Image Section */}
-                    {/* 
+                    
                     <div
-                        className="h-[100vh] w-full bg-cover bg-center"
+                        className="w-full bg-cover bg-center h-screen sm:h-[70vh] flex items-center justify-center"
                         style={{ backgroundImage: "url('/hero/image.png')" }}
                     >
-                        <div className="relative w-full max-w-xs p-5 bg-white rounded-lg shadow-lg left-8 top-16 sm:left-32 sm:top-24 sm:w-80">
+                        <div className="relative w-full max-w-xs bg-white rounded-lg shadow-lg p-5 pt-[10%] pb-[10%] sm:p-8 sm:pt-5 sm:pb-5 sm:w-80">
                             <img
                                 src="/products/product-5.png"
                                 alt="Customizable Product"
                                 className="w-full h-auto mb-4"
+                                loading="lazy"
                             />
 
                             <div className="text-center">
@@ -197,7 +198,6 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    */}
 
                     {/* What's your PHD Section */}
                     <div className="mt-24 text-center">
