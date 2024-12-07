@@ -1,7 +1,7 @@
 {
-  "/(user)/signin/page": "app/(user)/signin/page.js",
-  "/(user)/signup/page": "app/(user)/signup/page.js",
-  "/(user)/women/page": "app/(user)/women/page.js",
   "/(user)/checkout/page": "app/(user)/checkout/page.js",
+  "/(user)/signin/page": "app/(user)/signin/page.js",
+  "/(user)/track/page": "app/(user)/track/page.js",
+  "/(user)/signup/page": "app/(user)/signup/page.js",
   "/(user)/cart/page": "app/(user)/cart/page.js"
 }
