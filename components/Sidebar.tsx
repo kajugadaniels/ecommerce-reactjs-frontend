@@ -1,73 +1,69 @@
+// Sidebar.tsx
 import React from 'react';
+import Link from 'next/link';
 
-const Sidebar = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   return (
-    <div>
-      <nav className="fixed left-10 top-36 h-[700px] w-64 overflow-auto bg-gray-400 px-10 py-2 font-sans text-black shadow-lg">
+    <>
+      {/* Overlay for small devices */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black opacity-50 md:hidden"
+          onClick={onClose}
+          aria-hidden="true"
+        ></div>
+      )}
+      
+      <nav
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-400 px-6 py-4 shadow-lg transform ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 ease-in-out z-40 md:translate-x-0 md:w-1/3`}
+        aria-label="Sidebar Navigation"
+      >
         <ul>
-          <li className="mb-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider">
+          {/* Categories Section */}
+          <li className="mb-6">
+            <h3 className="text-sm font-semibold tracking-wider uppercase">
               Categories
             </h3>
-            <ul className="mt-2 space-y-1">
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Jacket</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Dress</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Coat</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Pants</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Newest</span>
-                </a>
-              </li>
+            <ul className="mt-4 space-y-2">
+              {['Jacket', 'Dress', 'Coat', 'Pants', 'Newest'].map((category) => (
+                <li key={category}>
+                  <Link href="#">
+                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
+                      {category}
+                    </span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </li>
 
-          <li className="mb-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider">
+          {/* Filters Section */}
+          <li className="mb-6">
+            <h3 className="text-sm font-semibold tracking-wider uppercase">
               Filters
             </h3>
-            <ul className="mt-2 space-y-1">
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Gender</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Color</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Shop by Price</span>
-                </a>
-              </li>
-              <li className="rounded px-3 py-2 transition-colors hover:bg-gray-700">
-                <a href="#" className="flex items-center">
-                  <span className="block flex-grow">Best For</span>
-                </a>
-              </li>
+            <ul className="mt-4 space-y-2">
+              {['Gender', 'Color', 'Shop by Price', 'Best For'].map((filter) => (
+                <li key={filter}>
+                  <Link href="#">
+                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
+                      {filter}
+                    </span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </li>
         </ul>
       </nav>
-    </div>
+    </>
   );
 };
 

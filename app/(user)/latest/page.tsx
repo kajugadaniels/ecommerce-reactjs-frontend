@@ -5,17 +5,17 @@ import Link from 'next/link';
 const Latest = () => {
   return (
     <div>
-      <div className="flex justify-between bg-black p-4 text-white">
+      <div className="flex justify-between p-4 text-white bg-black">
         <div>
           <h1 className="ml-10 text-xl">Enso By You (79)</h1>
         </div>
-        <div className="mr-52 flex place-items-center space-x-4">
-          <button className="rounded bg-gray-500 px-4 py-2 text-sm text-black">
+        <div className="flex space-x-4 mr-52 place-items-center">
+          <button className="px-4 py-2 text-sm text-black bg-gray-500 rounded">
             Hide Filters
           </button>
           <div className="relative">
             <select
-              className="appearance-none rounded bg-gray-400 px-1 py-2 text-black"
+              className="px-1 py-2 text-black bg-gray-400 rounded appearance-none"
               aria-label="Sort by"
             >
               <option>Sort By</option>
@@ -23,9 +23,9 @@ const Latest = () => {
               <option value="price-high-to-low">Price: High to Low</option>
               <option value="newest">Newest</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
               <svg
-                className="h-4 w-4 fill-current text-gray-500"
+                className="w-4 h-4 text-gray-500 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
@@ -37,8 +37,8 @@ const Latest = () => {
       </div>
 
       <Sidebar />
-      <div className="container mx-auto px-4">
-        <div className="ml-48 grid grid-cols-1 gap-10 md:grid-cols-3">
+      <div className="container px-4 mx-auto">
+        <div className="grid grid-cols-1 gap-10 ml-48 md:grid-cols-3">
           <div className="overflow-hidden rounded-lg bg-gray-300 font-[sans-serif] shadow-[0_4px_12px_-5px_rgba(0,0,0,0.4)]">
             <Link href="/latest/detail">
               <div className="flex min-h-[256px] items-center justify-center">
@@ -49,7 +49,7 @@ const Latest = () => {
                 />
               </div>
             </Link>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -69,7 +69,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -89,7 +89,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -108,7 +108,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -127,7 +127,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -146,7 +146,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -165,7 +165,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -184,7 +184,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
@@ -203,7 +203,7 @@ const Latest = () => {
                 className="w-[100%] object-contain"
               />
             </div>
-            <div className="bg-white p-6">
+            <div className="p-6 bg-white">
               <h3 className="text-[#D87D4A]">Customize</h3>
               <h3 className="text-gray-800">Hudy Kimono</h3>
               <p className="mt-2 text-sm text-gray-700">
