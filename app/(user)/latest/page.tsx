@@ -77,8 +77,8 @@ const Latest = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 mt-4 md:ml-[20%]">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="container mx-auto px-4 mt-4 md:ml-[20%] md:w-4/5">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Array(6)
             .fill(0)
             .map((_, idx) => (
@@ -87,11 +87,11 @@ const Latest = () => {
                 className="overflow-hidden font-sans transition-transform transform bg-gray-300 rounded-lg shadow-lg hover:-translate-y-2"
               >
                 <Link href="/latest/detail">
-                  <div className="flex min-h-[256px] items-center justify-center p-4">
+                  <div className="flex items-center justify-center h-64 p-4">
                     <img
                       src="/products/product-5.png"
                       alt="Hudy Kimono"
-                      className="object-contain w-full"
+                      className="object-contain w-full h-full"
                     />
                   </div>
                 </Link>
