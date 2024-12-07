@@ -53,9 +53,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               {['Jacket', 'Dress', 'Coat', 'Pants', 'Newest'].map((category) => (
                 <li key={category}>
                   <Link href="#">
-                    <a className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
+                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
                       {category}
-                    </a>
+                    </span>
                   </Link>
                 </li>
               ))}
