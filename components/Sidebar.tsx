@@ -37,12 +37,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )}
 
       <nav
-        className={`fixed top-0 left-0 h-full bg-gray-400 px-6 py-4 shadow-lg transform ${
+        className={`fixed top-0 left-0 h-full bg-gray-100 px-6 py-4 shadow-lg transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out z-40 md:translate-x-0`}
         style={{ width: '20%' }}
         aria-label="Sidebar Navigation"
       >
+        <div className="flex items-center justify-between mb-6 md:hidden">
+          <h2 className="text-lg font-semibold">Filters</h2>
+          <button onClick={onClose} aria-label="Close Filters">
+            <svg
+              className="w-6 h-6 text-gray-700"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
         <ul>
           {/* Categories Section */}
           <li className="mb-6">
@@ -53,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               {['Jacket', 'Dress', 'Coat', 'Pants', 'Newest'].map((category) => (
                 <li key={category}>
                   <Link href="#">
-                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
+                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-300">
                       {category}
                     </span>
                   </Link>
@@ -71,11 +86,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               {['Gender', 'Color', 'Shop by Price', 'Best For'].map((filter) => (
                 <li key={filter}>
                   <button
-                    className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
+                    className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-200 focus:outline-none"
                     onClick={() => toggleSection(filter)}
                     aria-expanded={openSections[filter]}
                   >
-                    <span>{filter}</span>
+                    <span className="text-sm font-medium">{filter}</span>
                     <svg
                       className={`h-4 w-4 transition-transform ${
                         openSections[filter] ? 'transform rotate-180' : ''
@@ -95,7 +110,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <div className="space-y-2">
                           {['Male', 'Female', 'Unisex'].map((gender) => (
                             <label key={gender} className="flex items-center space-x-2">
-                              <input type="checkbox" className="form-checkbox" />
+                              <input type="checkbox" className="w-4 h-4 text-indigo-600 form-checkbox" />
                               <span className="text-sm">{gender}</span>
                             </label>
                           ))}
@@ -105,7 +120,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <div className="space-y-2">
                           {['Red', 'Blue', 'Green', 'Black', 'White'].map((color) => (
                             <label key={color} className="flex items-center space-x-2">
-                              <input type="checkbox" className="form-checkbox" />
+                              <input type="checkbox" className="w-4 h-4 text-indigo-600 form-checkbox" />
                               <span className="text-sm">{color}</span>
                             </label>
                           ))}
@@ -135,7 +150,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <div className="space-y-2">
                           {['Casual', 'Formal', 'Sports', 'Party'].map((option) => (
                             <label key={option} className="flex items-center space-x-2">
-                              <input type="checkbox" className="form-checkbox" />
+                              <input type="checkbox" className="w-4 h-4 text-indigo-600 form-checkbox" />
                               <span className="text-sm">{option}</span>
                             </label>
                           ))}
