@@ -1,7 +1,6 @@
 {
   "/(user)/checkout/page": "app/(user)/checkout/page.js",
-  "/(user)/signin/page": "app/(user)/signin/page.js",
-  "/(user)/track/page": "app/(user)/track/page.js",
-  "/(user)/signup/page": "app/(user)/signup/page.js",
-  "/(user)/cart/page": "app/(user)/cart/page.js"
+  "/(user)/page": "app/(user)/page.js",
+  "/(user)/latest/page": "app/(user)/latest/page.js",
+  "/(user)/latest/detail/page": "app/(user)/latest/detail/page.js"
 }
