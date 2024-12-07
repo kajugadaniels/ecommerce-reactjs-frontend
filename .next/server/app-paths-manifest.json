@@ -1,5 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/(user)/latest/page": "app/(user)/latest/page.js",
-  "/(user)/latest/detail/page": "app/(user)/latest/detail/page.js"
+  "/(user)/latest/detail/page": "app/(user)/latest/detail/page.js",
+  "/(user)/unisex/page": "app/(user)/unisex/page.js",
+  "/(user)/page": "app/(user)/page.js",
+  "/(user)/men/page": "app/(user)/men/page.js",
+  "/(user)/women/page": "app/(user)/women/page.js"
 }

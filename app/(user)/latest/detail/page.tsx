@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaAngleDoubleDown } from 'react-icons/fa';
 
 const Page = () => {
   const images = [
@@ -10,20 +11,20 @@ const Page = () => {
 
   return (
     <>
-      <div className='bg-black p-32'>
-        <div className="flex  gap-28 p-10">
+      <div className="p-6 bg-black lg:p-32">
+        <div className="flex flex-col gap-8 lg:flex-row lg:gap-28">
           {/* Image Grid */}
-          <div className="flex justify-center items-center">
-            <div className="grid grid-cols-2 gap-2">
+          <div className="flex items-center justify-center w-full lg:w-3/5">
+            <div className="grid w-full grid-cols-2 gap-2">
               {images.map((image) => (
                 <div
                   key={image.id}
-                  className="border border-black flex bg-white"
+                  className="flex items-center justify-center p-2 bg-white border border-black"
                 >
                   <img
                     src="/products/product-5.png"
                     alt={image.alt}
-                    className={`w-[450px] h-[350px] ${image.rotation}`}
+                    className={`w-full h-auto object-cover ${image.rotation}`}
                   />
                 </div>
               ))}
@@ -31,116 +32,77 @@ const Page = () => {
           </div>
 
           {/* Product Description */}
-          <div className="lg:w-1/2 pl-4">
-            <h2 className="text-3xl font-bold mb-4 text-orange-500">XX99 MARK II KIMONO</h2>
-            <p className="mb-6">
+          <div className="flex flex-col items-start w-full lg:w-2/5 font-alata">
+            <h2 className="mb-4 text-2xl font-bold lg:text-3xl text-primary">
+              XX99 MARK II KIMONO
+            </h2>
+            <p className="mb-4 text-sm text-white lg:text-base">
               Lorem Ipsum is a standard dummy text used in printing and web design.
               Learn about its origin, variations, translations, and how to generate
               it online. Lorem Ipsum is a standard dummy text used in printing and
               web design. Learn about its origin, variations, translations, and how
               to generate it online.
             </p>
-            <p className="mb-6 text-sm">
+            <p className="mb-6 text-sm text-gray-400">
               Custom-made and delivered to you in 2 weeks or less.
             </p>
-            <div className="flex flex-col items-center justify-center bg-white p-6 w-96 ml-32 mt-32 rounded-lg shadow-md">
+            <div className="w-full mt-8 bg-white rounded-lg shadow-md px-14 py-14 lg:p-8 lg:w-3/4 lg:mt-16">
               {/* Description Text */}
-              <p className="text-sm text-gray-600 mb-2">
+              <p className="mb-2 text-sm text-center text-black">
                 Custom-made and delivered to you in 4 weeks or less.
               </p>
 
               {/* Title */}
-              <h2 className="text-lg font-bold text-orange-500 uppercase mb-4">
-                Customise Your Own Kimono
+              <h2 className="mb-4 text-sm text-center font-bold uppercase text-[#D87D4A]">
+                Customize Your Own Kimono
               </h2>
 
               {/* Arrows */}
-              <div className="mb-4">
-                <div className="w-6 h-1 bg-orange-500 transform rotate-45 mb-1"></div>
-                <div className="w-6 h-1 bg-orange-500 transform -rotate-45"></div>
+              <div className="flex items-center justify-center mb-4">
+                <FaAngleDoubleDown className="w-24 h-24 text-[#D87D4A]" />
               </div>
 
               {/* Customize Button */}
-              <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-full flex items-center space-x-2">
-                <span>Customize</span>
-
+              <button className="flex items-center justify-center w-full px-4 py-4 font-semibold text-white transition rounded-full bg-[#D87D4A]">
+                Customize
               </button>
             </div>
           </div>
-
-
         </div>
-        <h2 className='pl-20 text-3xl font-extrabold'>You May Also Like This </h2>
 
-        <div className="ml-10 mt-32  grid grid-cols-1 max-xl:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {/* You May Also Like Section */}
+        <h2 className="mt-12 text-xl font-extrabold text-center text-white lg:text-3xl font-alata">
+          You May Also Like This
+        </h2>
 
-
-          <div
-            className="relative flex cursor-pointer items-end justify-center rounded-2xl bg-transparent p-2 hover:-translate-y-2"
-            style={{ height: '350px' }}
-          >
-            {' '}
-            {/* Adjust height as needed */}
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 transform">
-              <img
-                src="/products/product-3.png"
-                alt="Team Member"
-                className="mt-10  w-40 object-contain"
-              />
-            </div>
-            <div className="h-72 w-96 rounded-xl bg-white p-4 text-center text-black shadow-lg">
-              <div className="mt-32">
-                <p className="top-0 text-xl font-semibold text-black">Name</p>
-                <p className="text-xl text-black">Title</p>
+        <div className="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {Array(4)
+            .fill(0)
+            .map((_, idx) => (
+              <div
+                key={idx}
+                className="relative p-5 transition-all shadow-lg cursor-pointer rounded-2xl hover:-translate-y-2"
+                style={{
+                  background: 'linear-gradient(to bottom, #000000 50%, #FFFFFF 50%)',
+                }}
+              >
+                <div className="w-full mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8 h-52 md:mb-2">
+                  <img
+                    src={`/products/product-${idx + 1}.png`}
+                    alt={`Product ${idx + 1}`}
+                    className="object-contain w-full h-full"
+                  />
+                </div>
+                <div className="flex items-center justify-center px-4 py-2 sm:px-10">
+                  <h3 className="text-lg font-extrabold text-center text-gray-800 sm:text-base">
+                    Product Name
+                  </h3>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div
-            className="relative flex cursor-pointer items-end justify-center rounded-2xl bg-transparent p-5 hover:-translate-y-2"
-            style={{ height: '350px' }}
-          >
-            {/* <h2 className='text-white'>hello</h2 */}
-            {' '}
-            {/* Adjust height as needed */}
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 transform">
-              <img
-                src="/products/product-1.png"
-                alt="Team Member"
-                className="mt-10 h-auto w-40 object-contain"
-              />
-            </div>
-            <div className="h-72 w-96 rounded-xl bg-white p-4 text-center text-black shadow-lg">
-              <div className="mt-32">
-                <p className="top-0 text-xl font-semibold text-black">Name</p>
-                <p className="text-xl text-black">Title</p>
-              </div>
-            </div>
-          </div>
-          <div
-            className="relative flex cursor-pointer items-end justify-center rounded-2xl bg-transparent p-5 hover:-translate-y-2"
-            style={{ height: '350px' }}
-          >
-            {' '}
-            {/* Adjust height as needed */}
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 transform">
-              <img
-                src="/products/product-2.png"
-                alt="Team Member"
-                className="mt-10 h-auto w-40 object-contain"
-              />
-            </div>
-            <div className="h-72  w-96 rounded-xl bg-white p-4 text-center text-black shadow-lg">
-              <div className="mt-32">
-                <p className="top-0 text-xl font-semibold text-black">Name</p>
-                <p className="text-xl text-black">Title</p>
-              </div>
-            </div>
-          </div>
+            ))}
         </div>
       </div>
     </>
-
   );
 };
 
