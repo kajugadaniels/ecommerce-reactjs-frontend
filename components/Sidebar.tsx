@@ -37,12 +37,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       )}
 
       <nav
-        className={`fixed top-0 left-0 h-full bg-gray-100 px-6 py-4 shadow-lg transform ${
+        className={`fixed top-0 left-0 h-full bg-gray-400 px-6 py-4 shadow-lg transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out z-40 md:translate-x-0`}
-        style={{ width: '20%' }}
+        } transition-transform duration-300 ease-in-out z-40 w-4/5 md:w-1/5 md:translate-x-0`}
         aria-label="Sidebar Navigation"
       >
+        {/* Close Button for Small Devices */}
         <div className="flex items-center justify-between mb-6 md:hidden">
           <h2 className="text-lg font-semibold">Filters</h2>
           <button onClick={onClose} aria-label="Close Filters">
@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               {['Jacket', 'Dress', 'Coat', 'Pants', 'Newest'].map((category) => (
                 <li key={category}>
                   <Link href="#">
-                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-300">
+                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
                       {category}
                     </span>
                   </Link>
@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               {['Gender', 'Color', 'Shop by Price', 'Best For'].map((filter) => (
                 <li key={filter}>
                   <button
-                    className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-200 focus:outline-none"
+                    className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
                     onClick={() => toggleSection(filter)}
                     aria-expanded={openSections[filter]}
                   >
