@@ -16,7 +16,7 @@ const Home = () => {
               Enso Collections Wardrobe
             </h1>
             <p className="mx-auto mt-2 max-w-xl text-sm text-white sm:max-w-2xl">
-              Let's find out! Be just who you are by putting more youness in
+              Let`s find out! Be just who you are by putting more youness in
               your kimononess with Enso By You, Enso co-creation service for
               Members. A little more of this, a little less of that—just have
               fun customizing a shoe that feels more like you.
@@ -62,10 +62,10 @@ const Home = () => {
               Choose a So-You Kimono
             </h1>
             <p className="mx-auto mt-2 max-w-xl text-sm text-white sm:max-w-2xl">
-              Whether you’re remixing a classic into something never seen before
+              Whether you`re remixing a classic into something never seen before
               or simplifying the latest drop into a totally neutral palette,
               your customization journey starts with choosing a shoe. Luckily,
-              we’re always adding newness so you can find the just-right way to
+              we`re always adding newness so you can find the just-right way to
               express your style.
             </p>
             <button className="mt-4 rounded-full bg-white px-8 py-3 text-black transition hover:bg-gray-200 sm:px-16 sm:py-4">
@@ -74,7 +74,7 @@ const Home = () => {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex w-full flex-col sm:flex-row rounded bg-[#000] p-6 sm:px-8">
+            <div className="flex w-full flex-col rounded bg-[#000] p-6 sm:flex-row sm:px-8">
               <div className="p-4">
                 <h3 className="text-lg font-semibold sm:text-xl">
                   Bringing you the best KIMONO gear
@@ -96,7 +96,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex w-full flex-col sm:flex-row rounded bg-[#D87D4A] p-6 sm:px-8">
+            <div className="flex w-full flex-col rounded bg-[#D87D4A] p-6 sm:flex-row sm:px-8">
               <div className="flex-shrink-0">
                 <img
                   src="/products/product-3.png"
@@ -189,11 +189,11 @@ const Home = () => {
           </div> */}
           <div className="mt-24 text-center">
             <h1 className="mb-4 text-3xl font-semibold text-white sm:text-4xl">
-              What's your PHD?
+              What`s your PHD?
             </h1>
             <p className="mx-auto mt-2 max-w-xl text-sm text-white sm:max-w-2xl">
               Like your shoe signature, your Personal I.D. is any combo of
-              letters and numbers that rep you. Maybe it's a nickname, a mantra,
+              letters and numbers that rep you. Maybe its a nickname, a mantra,
               or your computer password. Pick your P.I.D., and show the world
               who this signature shoe belongs to.
             </p>
@@ -204,10 +204,7 @@ const Home = () => {
           <div className="mt-24 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {/* Products Section */}
 
-            <div
-
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
-            >
+            <div className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2">
               <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
                 <img
                   src="/products/product-6.png"
@@ -216,10 +213,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            <div
-
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
-            >
+            <div className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2">
               <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
                 <img
                   src="/products/product-6.png"
@@ -228,10 +222,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            <div
-
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
-            >
+            <div className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2">
               <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
                 <img
                   src="/products/product-6.png"
@@ -240,10 +231,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            <div
-
-              className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2"
-            >
+            <div className="relative cursor-pointer rounded-2xl bg-transparent p-5 transition-all hover:-translate-y-2">
               <div className="aspect-w-16 aspect-h-8 mx-auto mb-4 overflow-hidden">
                 <img
                   src="/products/product-6.png"
@@ -252,7 +240,6 @@ const Home = () => {
                 />
               </div>
             </div>
-
           </div>
 
           <h2 className="mt-8 text-center text-2xl font-extrabold text-[#D87D4A] sm:text-3xl lg:text-4xl">
@@ -273,7 +260,7 @@ const Home = () => {
                     <img
                       src="/hero/team.png"
                       alt="Team Member"
-                      className="mt-16 h-auto w-28 sm:w-36 md:w-40 object-contain"
+                      className="mt-16 h-auto w-28 object-contain sm:w-36 md:w-40"
                     />
                   </div>
                   <div className="h-40 w-full max-w-sm rounded-xl bg-white p-4 text-center text-black shadow-lg md:h-52">
@@ -287,7 +274,6 @@ const Home = () => {
                 </div>
               ))}
           </div>
-
         </div>
       </div>
     </>

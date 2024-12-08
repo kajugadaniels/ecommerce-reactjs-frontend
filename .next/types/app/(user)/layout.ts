@@ -1,4 +1,4 @@
-// File: /Users/uhiriweolivine/Documents/nexcode/enso-client/app/(user)/layout.tsx
+// File: /Users/telesphore/ensoapp/enso/app/(user)/layout.tsx
 import * as entry from '../../../../app/(user)/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
