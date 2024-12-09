@@ -1,3 +1,5 @@
+// client/app/signup/page.tsx
+
 'use client';
 
 import React, { useState } from 'react';
@@ -36,8 +38,8 @@ const Register = () => {
       return;
     }
 
-    if (email !== confirmPassword) { // Assuming confirmPassword is meant to confirm email
-      toast.error('Email and Confirm Email do not match.');
+    if (password !== confirmPassword) { // Corrected comparison
+      toast.error('Password and Confirm Password do not match.');
       return;
     }
 
@@ -59,9 +61,17 @@ const Register = () => {
         toast.success('Registration successful! Please log in.');
         router.push('/signin');
       } else {
-        toast.error(response.data.message || 'Registration failed.');
+        // Display backend validation errors if any
+        if (response.data.errors) {
+          response.data.errors.forEach((err: any) => {
+            toast.error(err.msg);
+          });
+        } else {
+          toast.error(response.data.message || 'Registration failed.');
+        }
       }
     } catch (error: any) {
+      console.error('Registration Error:', error); // Enhanced error logging
       toast.error(error.response?.data?.message || 'An error occurred.');
     } finally {
       setIsSubmitting(false);
