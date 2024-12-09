@@ -69,7 +69,7 @@ const Register = () => {
         }
       }
     } catch (error: any) {
-      console.error('Registration Error:', error); // Enhanced error logging
+      // Removed console.error for cleaner logs
       toast.error(error.response?.data?.message || 'An error occurred.');
     } finally {
       setIsSubmitting(false);
