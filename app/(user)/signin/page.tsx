@@ -54,8 +54,7 @@ const Login = () => {
         // Store data in localStorage
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        // Redirect to protected route
-        router.push('/users/allusers');
+        router.push('/');
       } else {
         // Display backend validation errors if any
         if (response.data.errors) {
