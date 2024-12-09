@@ -1,14 +1,10 @@
-"use client"
-
 import React, { useState } from 'react';
-import { PostsData } from '@/Helpers/CallRequestHelper';
+import { registerUser } from '@/Helpers/CallRequestHelper';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { useUserContext } from '@/contexts/userContext';
 
 const Register = () => {
   const router = useRouter();
-  const { setUserData, setToken } = useUserContext();
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -29,7 +25,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic frontend validation
+    // Frontend validation
     if (
       !formData.firstName ||
       !formData.lastName ||
@@ -57,7 +53,7 @@ const Register = () => {
         confirmPassword: formData.confirmEmail,
       };
 
-      const response = await PostsData('/auth/register', data);
+      const response = await registerUser(data);
 
       if (response.status === 201) {
         toast.success('Registration successful! Please log in.');
