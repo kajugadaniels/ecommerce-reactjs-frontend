@@ -57,9 +57,17 @@ const Login = () => {
         // Redirect to protected route
         router.push('/users/allusers');
       } else {
-        toast.error(response.data.message || 'Login failed.');
+        // Display backend validation errors if any
+        if (response.data.errors) {
+          response.data.errors.forEach((err: any) => {
+            toast.error(err.msg);
+          });
+        } else {
+          toast.error(response.data.message || 'Login failed.');
+        }
       }
     } catch (error: any) {
+      console.error('Login Error:', error); // Enhanced error logging
       toast.error(error.response?.data?.message || 'An error occurred.');
     } finally {
       setIsSubmitting(false);
