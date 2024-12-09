@@ -1,7 +1,5 @@
-"use client"
-
 import React, { useState } from 'react';
-import { PostData } from '@/Helpers/CallRequestHelper';
+import { loginUser } from '@/Helpers/CallRequestHelper';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '@/contexts/userContext';
@@ -27,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic frontend validation
+    // Frontend validation
     if (!formData.login || !formData.password) {
       toast.error('Please fill in all fields.');
       return;
@@ -39,15 +37,18 @@ const Login = () => {
         password: formData.password,
       };
 
-      const response = await PostData('/auth/login', data);
+      const response = await loginUser(data);
 
       if (response.status === 200) {
         const { user, token } = response.data;
         toast.success('Login successful!');
         setUserData(user);
         setToken(token);
-        // Redirect to protected route, e.g., /users/allusers
-        router.push('/');
+        // Store data in localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token);
+        // Redirect to protected route
+        router.push('/users/allusers');
       } else {
         toast.error(response.data.message || 'Login failed.');
       }
