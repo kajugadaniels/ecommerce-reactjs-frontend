@@ -1,32 +1,44 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
-const token = Cookies.get('token');
-let baseURL;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-} else {
-  baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-}
+// Get the base URL from environment variables
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
+// Create an Axios instance
 const apiCaller = axios.create({
   baseURL: baseURL,
   headers: {
-    'Content-Type': 'application/json, multipart/form-data',
-    Authorization: token !== undefined ? `Bearer ${token}` : '',
+    'Content-Type': 'application/json',
   },
 });
 
+// Add a request interceptor to include the token
+apiCaller.interceptors.request.use(
+  (config) => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor to handle unauthorized errors
 apiCaller.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
     if (typeof window !== 'undefined' && error?.response?.status === 401) {
-      window.location.href = '/login';
+      // Redirect to login page if unauthorized
+      window.location.href = '/signin';
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default apiCaller;
