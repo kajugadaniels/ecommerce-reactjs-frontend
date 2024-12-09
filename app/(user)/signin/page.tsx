@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 import { loginUser } from '@/Helpers/CallRequestHelper';
 import { toast } from 'react-toastify';
