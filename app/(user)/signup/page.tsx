@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import { registerUser } from '@/Helpers/CallRequestHelper';
@@ -11,11 +11,13 @@ const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    username: '',
     email: '',
-    confirmEmail: '',
+    phoneNumber: '',
     password: '',
+    confirmPassword: '',
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -28,31 +30,27 @@ const Register = () => {
     e.preventDefault();
 
     // Frontend validation
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.username ||
-      !formData.email ||
-      !formData.confirmEmail ||
-      !formData.password
-    ) {
+    const { firstName, lastName, email, phoneNumber, password, confirmPassword } = formData;
+    if (!firstName || !lastName || !email || !phoneNumber || !password || !confirmPassword) {
       toast.error('Please fill in all fields.');
       return;
     }
 
-    if (formData.email !== formData.confirmEmail) {
-      toast.error('Emails do not match.');
+    if (email !== confirmPassword) { // Assuming confirmPassword is meant to confirm email
+      toast.error('Email and Confirm Email do not match.');
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
       const data = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        confirmPassword: formData.confirmEmail,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password,
+        confirmPassword,
       };
 
       const response = await registerUser(data);
@@ -65,6 +63,8 @@ const Register = () => {
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'An error occurred.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -106,16 +106,6 @@ const Register = () => {
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
           />
 
-          {/* Username */}
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-          />
-
           {/* Email */}
           <input
             type="email"
@@ -126,12 +116,12 @@ const Register = () => {
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
           />
 
-          {/* Confirm Email */}
+          {/* Phone Number */}
           <input
-            type="email"
-            name="confirmEmail"
-            placeholder="Confirm Email or mobile number"
-            value={formData.confirmEmail}
+            type="text"
+            name="phoneNumber"
+            placeholder="Phone Number"
+            value={formData.phoneNumber}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
           />
@@ -143,15 +133,28 @@ const Register = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
+            className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
+          />
+
+          {/* Confirm Password */}
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             className="w-full px-4 py-2 mb-6 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
           />
 
           {/* Sign Up Button */}
           <button
             type="submit"
-            className="w-full py-2 font-semibold text-white transition duration-300 bg-[#D87D4A] rounded hover:bg-[#c36a39]"
+            disabled={isSubmitting}
+            className={`w-full py-2 font-semibold text-white transition duration-300 bg-[#D87D4A] rounded hover:bg-[#c36a39] ${
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            SIGN UP
+            {isSubmitting ? 'Signing Up...' : 'SIGN UP'}
           </button>
         </form>
 
