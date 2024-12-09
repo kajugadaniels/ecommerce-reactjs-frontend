@@ -1,6 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { PostData } from '@/Helpers/CallRequestHelper';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { useUserContext } from '@/contexts/userContext';
 
 const Login = () => {
+  const router = useRouter();
+  const { setUserData, setToken } = useUserContext();
+
+  const [formData, setFormData] = useState({
+    login: '',
+    password: '',
+    rememberMe: false,
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Basic frontend validation
+    if (!formData.login || !formData.password) {
+      toast.error('Please fill in all fields.');
+      return;
+    }
+
+    try {
+      const data = {
+        login: formData.login,
+        password: formData.password,
+      };
+
+      const response = await PostData('/auth/login', data);
+
+      if (response.status === 200) {
+        const { user, token } = response.data;
+        toast.success('Login successful!');
+        setUserData(user);
+        setToken(token);
+        // Redirect to protected route, e.g., /users/allusers
+        router.push('/');
+      } else {
+        toast.error(response.data.message || 'Login failed.');
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'An error occurred.');
+    }
+  };
+
   return (
     <div
       className="flex items-center justify-center min-h-screen p-4 bg-center bg-cover"
@@ -18,20 +71,43 @@ const Login = () => {
         </p>
 
         {/* Form */}
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Email */}
           <input
             type="email"
+            name="login"
             placeholder="Email or mobile number"
+            value={formData.login}
+            onChange={handleChange}
             className="w-full mb-4 px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A] placeholder-gray-500"
           />
 
           {/* Password */}
           <input
             type="password"
+            name="password"
             placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
             className="w-full mb-6 px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A] placeholder-gray-500"
           />
+
+          {/* Remember Me and Forgot Password */}
+          <div className="flex items-center justify-between mb-6">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                name="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+                className="mr-2 bg-gray-700 border-gray-600 focus:ring-0"
+              />
+              Remember me
+            </label>
+            <a href="#" className="text-[#D87D4A] hover:underline">
+              Forgot password?
+            </a>
+          </div>
 
           {/* Sign In Button */}
           <button
@@ -41,20 +117,6 @@ const Login = () => {
             SIGN IN
           </button>
         </form>
-
-        {/* Additional Links */}
-        <div className="flex flex-col items-center justify-between mt-4 text-sm text-gray-400 sm:flex-row">
-          <label className="flex items-center mb-2 sm:mb-0">
-            <input
-              type="checkbox"
-              className="mr-2 bg-gray-700 border-gray-600 focus:ring-0"
-            />
-            Remember me
-          </label>
-          <a href="#" className="text-[#D87D4A] hover:underline">
-            Forgot password?
-          </a>
-        </div>
 
         {/* Login Link */}
         <p className="mt-6 text-center text-gray-400">
