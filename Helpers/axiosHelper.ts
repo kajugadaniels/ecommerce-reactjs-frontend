@@ -9,6 +9,7 @@ const apiCaller = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: false,
 });
 
 // Add a request interceptor to include the token
@@ -34,6 +35,7 @@ apiCaller.interceptors.response.use(
   },
   (error) => {
     if (typeof window !== 'undefined' && error?.response?.status === 401) {
+      // Optionally, you can toast an error here
       // Redirect to login page if unauthorized
       window.location.href = '/signin';
     }

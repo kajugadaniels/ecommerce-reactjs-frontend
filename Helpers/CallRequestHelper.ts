@@ -1,5 +1,6 @@
 import apiCaller from './axiosHelper';
 
+// Register User
 export const registerUser = async (data: any) => {
   try {
     const response = await apiCaller.post('/auth/register', data);
@@ -9,6 +10,7 @@ export const registerUser = async (data: any) => {
   }
 };
 
+// Login User
 export const loginUser = async (data: any) => {
   try {
     const response = await apiCaller.post('/auth/login', data);
@@ -17,3 +19,4 @@ export const loginUser = async (data: any) => {
     return e.response;
   }
 };
+
