@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 import { PostData } from '@/Helpers/CallRequestHelper';
 import { toast } from 'react-toastify';
