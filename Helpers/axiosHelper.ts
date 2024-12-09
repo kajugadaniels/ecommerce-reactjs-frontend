@@ -35,6 +35,7 @@ apiCaller.interceptors.response.use(
   },
   (error) => {
     if (typeof window !== 'undefined' && error?.response?.status === 401) {
+      console.error('Unauthorized error detected:', error.response.data);
       // Optionally, you can toast an error here
       // Redirect to login page if unauthorized
       window.location.href = '/signin';
