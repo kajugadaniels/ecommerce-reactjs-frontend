@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import { loginUser } from '@/Helpers/CallRequestHelper';
@@ -16,6 +16,8 @@ const Login = () => {
     rememberMe: false,
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -28,15 +30,18 @@ const Login = () => {
     e.preventDefault();
 
     // Frontend validation
-    if (!formData.login || !formData.password) {
+    const { login, password } = formData;
+    if (!login || !password) {
       toast.error('Please fill in all fields.');
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
       const data = {
-        login: formData.login,
-        password: formData.password,
+        login,
+        password,
       };
 
       const response = await loginUser(data);
@@ -56,6 +61,8 @@ const Login = () => {
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'An error occurred.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -117,9 +124,12 @@ const Login = () => {
           {/* Sign In Button */}
           <button
             type="submit"
-            className="w-full bg-[#D87D4A] text-white py-2 rounded font-semibold hover:bg-[#c36a39] transition duration-300"
+            disabled={isSubmitting}
+            className={`w-full bg-[#D87D4A] text-white py-2 rounded font-semibold hover:bg-[#c36a39] transition duration-300 ${
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            SIGN IN
+            {isSubmitting ? 'Signing In...' : 'SIGN IN'}
           </button>
         </form>
 
