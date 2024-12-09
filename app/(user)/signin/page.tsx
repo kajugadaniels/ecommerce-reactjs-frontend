@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { loginUser } from '@/Helpers/CallRequestHelper';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '@/contexts/userContext';
-import { loginUser } from '@/Helpers/CallRequestHelper';
 
 const Login = () => {
   const router = useRouter();
@@ -54,7 +54,8 @@ const Login = () => {
         // Store data in localStorage
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        router.push('/');
+        // Redirect to protected route
+        router.push('/users/allusers');
       } else {
         // Display backend validation errors if any
         if (response.data.errors) {
@@ -66,7 +67,7 @@ const Login = () => {
         }
       }
     } catch (error: any) {
-      console.error('Login Error:', error); // Enhanced error logging
+      // Removed console.error for cleaner logs
       toast.error(error.response?.data?.message || 'An error occurred.');
     } finally {
       setIsSubmitting(false);
