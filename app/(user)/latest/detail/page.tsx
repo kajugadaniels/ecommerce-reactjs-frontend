@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 
@@ -63,9 +64,11 @@ const Page = () => {
               </div>
 
               {/* Customize Button */}
-              <button className="flex items-center justify-center w-full px-4 py-4 font-semibold text-white transition rounded-full bg-[#D87D4A]">
-                Customize
-              </button>
+              <Link href='/customize'>
+                <button className="flex items-center justify-center w-full px-4 py-4 font-semibold text-white transition rounded-full bg-[#D87D4A]">
+                  Customize
+                </button>
+              </Link>
             </div>
           </div>
         </div>
