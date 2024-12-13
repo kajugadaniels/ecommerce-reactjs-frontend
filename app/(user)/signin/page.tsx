@@ -76,14 +76,14 @@ const Login = () => {
 
   return (
     <div
-      className="flex items-center justify-center min-h-screen p-4 bg-center bg-cover"
+      className="flex min-h-screen items-center justify-center bg-cover bg-center p-4"
       style={{
         backgroundImage: "url('/products/aut_background.png')",
       }}
     >
-      <div className="w-full max-w-md p-6 bg-black rounded-lg shadow-lg bg-opacity-70 sm:p-8 md:p-12">
+      <div className="w-full max-w-md rounded-lg bg-black bg-opacity-70 p-6 shadow-lg sm:p-8 md:p-12">
         {/* Title */}
-        <h2 className="mb-2 text-2xl font-bold text-center text-white sm:text-3xl">
+        <h2 className="mb-2 text-center text-2xl font-bold text-white sm:text-3xl">
           Login
         </h2>
         <p className="mb-6 text-center text-gray-400">
@@ -97,9 +97,13 @@ const Login = () => {
             type="email"
             name="login"
             placeholder="Email or mobile number"
+<<<<<<< HEAD
             value={formData.login}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A] placeholder-gray-500"
+=======
+            className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
+>>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Password */}
@@ -107,9 +111,13 @@ const Login = () => {
             type="password"
             name="password"
             placeholder="Password"
+<<<<<<< HEAD
             value={formData.password}
             onChange={handleChange}
             className="w-full mb-6 px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A] placeholder-gray-500"
+=======
+            className="mb-6 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
+>>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Remember Me and Forgot Password */}
@@ -132,18 +140,40 @@ const Login = () => {
           {/* Sign In Button */}
           <button
             type="submit"
+<<<<<<< HEAD
             disabled={isSubmitting}
             className={`w-full bg-[#D87D4A] text-white py-2 rounded font-semibold hover:bg-[#c36a39] transition duration-300 ${
               isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
             }`}
+=======
+            className="w-full rounded bg-[#D87D4A] py-2 font-semibold text-white transition duration-300 hover:bg-[#c36a39]"
+>>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           >
             {isSubmitting ? 'Signing In...' : 'SIGN IN'}
           </button>
         </form>
 
+<<<<<<< HEAD
+=======
+        {/* Additional Links */}
+        <div className="mt-4 flex flex-col items-center justify-between text-sm text-gray-400 sm:flex-row">
+          <label className="mb-2 flex items-center sm:mb-0">
+            <input
+              type="email"
+              placeholder="Email or mobile number"
+              className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            Remember me
+          </label>
+          <a href="#" className="text-[#D87D4A] hover:underline">
+            Forgot password?
+          </a>
+        </div>
+
+>>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
         {/* Login Link */}
         <p className="mt-6 text-center text-gray-400">
-          Don't have an account?{' '}
+          Don`t have an account?{' '}
           <a href="/signup" className="text-[#D87D4A] hover:underline">
             Register
           </a>

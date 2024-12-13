@@ -2,6 +2,7 @@ import React from 'react';
 
 const Hero = () => {
   return (
+<<<<<<< HEAD
     <div className="relative h-[80vh] w-full overflow-hidden">
       {/* Background Video */}
       <video
@@ -26,6 +27,12 @@ const Hero = () => {
         </button>
       </div>
     </div>
+=======
+    <div
+      className="h-[70vh] w-full bg-cover bg-center sm:h-[20vh]"
+      style={{ backgroundImage: "url('/hero/image.png')" }}
+    ></div>
+>>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
   );
 };
 

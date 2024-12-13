@@ -2,4 +2,9 @@
 
 .next/
 
+<<<<<<< HEAD
 .husky/
+=======
+.husky
+/.next
+>>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d

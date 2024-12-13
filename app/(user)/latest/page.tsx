@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
@@ -35,24 +35,24 @@ const Latest = () => {
   return (
     <div className="relative">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 text-white bg-black">
+      <div className="flex items-center justify-between bg-black p-4 text-white">
         <div>
           <h1 className="text-xl md:text-2xl">Enso By You (79)</h1>
         </div>
         <div className="flex items-center space-x-4">
           {/* Toggle Filters Button for Small Devices */}
           <button
-            className="px-4 py-2 text-sm text-black bg-gray-500 rounded md:hidden"
+            className="rounded bg-gray-500 px-4 py-2 text-sm text-black md:hidden"
             onClick={toggleSidebar}
             aria-label="Toggle Filters"
           >
             {isSidebarOpen ? 'Hide Filters' : 'Show Filters'}
           </button>
-          
+
           {/* Sort By Dropdown */}
           <div className="relative">
             <select
-              className="px-2 py-2 text-black bg-gray-400 rounded appearance-none focus:outline-none"
+              className="appearance-none rounded bg-gray-400 px-2 py-2 text-black focus:outline-none"
               aria-label="Sort by"
             >
               <option>Sort By</option>
@@ -60,9 +60,9 @@ const Latest = () => {
               <option value="price-high-to-low">Price: High to Low</option>
               <option value="newest">Newest</option>
             </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
               <svg
-                className="w-4 h-4 text-gray-500 fill-current"
+                className="h-4 w-4 fill-current text-gray-500"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
@@ -77,25 +77,25 @@ const Latest = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 mt-4 md:ml-[20%] md:w-4/5">
+      <div className="container mx-auto mt-4 px-4 md:ml-[20%] md:w-4/5">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Array(6)
             .fill(0)
             .map((_, idx) => (
               <div
                 key={idx}
-                className="overflow-hidden font-sans transition-transform transform bg-gray-300 rounded-lg shadow-lg hover:-translate-y-2"
+                className="transform overflow-hidden rounded-lg bg-gray-300 font-sans shadow-lg transition-transform hover:-translate-y-2"
               >
                 <Link href="/latest/detail">
-                  <div className="flex items-center justify-center h-64 p-4">
+                  <div className="flex h-64 items-center justify-center p-4">
                     <img
                       src="/products/product-5.png"
                       alt="Hudy Kimono"
-                      className="object-contain w-full h-full"
+                      className="h-full w-full object-contain"
                     />
                   </div>
                 </Link>
-                <div className="p-6 bg-white">
+                <div className="bg-white p-6">
                   <h3 className="text-[#D87D4A]">Customize</h3>
                   <h3 className="text-gray-800">Hudy Kimono</h3>
                   <p className="mt-2 text-sm text-gray-700">

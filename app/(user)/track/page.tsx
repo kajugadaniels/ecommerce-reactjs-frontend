@@ -2,51 +2,69 @@ import React from 'react';
 
 const Track = () => {
   return (
-    <div className="min-h-screen p-6 text-white bg-black sm:p-12 lg:p-32">
+    <div className="min-h-screen bg-black p-6 text-white sm:p-12 lg:p-32">
       {/* Back Button */}
-      <button className="mb-4 sm:mb-6 font-bold text-[#D87D4A] flex items-center">
+      <button className="mb-4 flex items-center font-bold text-[#D87D4A] sm:mb-6">
         <span className="mr-2">🔙</span> BACK
       </button>
 
       {/* Title */}
-      <h2 className="mb-6 sm:mb-8 text-2xl sm:text-xl font-semibold text-center text-[#D87D4A]">
+      <h2 className="mb-6 text-center text-2xl font-semibold text-[#D87D4A] sm:mb-8 sm:text-xl">
         ORDER DETAILS
       </h2>
 
       {/* Order Timeline */}
-      <div className="flex flex-col items-center justify-between mb-8 sm:flex-row sm:mb-12">
+      <div className="mb-8 flex flex-col items-center justify-between sm:mb-12 sm:flex-row">
         {/* Step: Order Placed */}
-        <div className="flex flex-col items-center mb-4 sm:mb-0 sm:w-1/5">
-          <div className="text-sm font-bold text-green-500 sm:text-base">Order Placed</div>
-          <div className="w-4 h-4 mt-2 bg-green-500 rounded-full"></div>
-          <div className="mt-2 text-xs text-gray-400 sm:text-sm">Wed, 11th Jan</div>
+        <div className="mb-4 flex flex-col items-center sm:mb-0 sm:w-1/5">
+          <div className="text-sm font-bold text-green-500 sm:text-base">
+            Order Placed
+          </div>
+          <div className="mt-2 h-4 w-4 rounded-full bg-green-500"></div>
+          <div className="mt-2 text-xs text-gray-400 sm:text-sm">
+            Wed, 11th Jan
+          </div>
         </div>
 
         {/* Step: Order Confirmed */}
-        <div className="flex flex-col items-center mb-4 sm:mb-0 sm:w-1/5">
-          <div className="text-sm font-bold text-green-500 sm:text-base">Order Confirmed</div>
-          <div className="w-4 h-4 mt-2 bg-green-500 rounded-full"></div>
-          <div className="mt-2 text-xs text-gray-400 sm:text-sm">Wed, 11th Jan</div>
+        <div className="mb-4 flex flex-col items-center sm:mb-0 sm:w-1/5">
+          <div className="text-sm font-bold text-green-500 sm:text-base">
+            Order Confirmed
+          </div>
+          <div className="mt-2 h-4 w-4 rounded-full bg-green-500"></div>
+          <div className="mt-2 text-xs text-gray-400 sm:text-sm">
+            Wed, 11th Jan
+          </div>
         </div>
 
         {/* Step: Shipped */}
-        <div className="flex flex-col items-center mb-4 sm:mb-0 sm:w-1/5">
-          <div className="text-sm font-bold text-gray-200 sm:text-base">Shipped</div>
-          <div className="w-4 h-4 mt-2 bg-gray-200 rounded-full"></div>
-          <div className="mt-2 text-xs text-gray-400 sm:text-sm">Wed, 11th Jan</div>
+        <div className="mb-4 flex flex-col items-center sm:mb-0 sm:w-1/5">
+          <div className="text-sm font-bold text-gray-200 sm:text-base">
+            Shipped
+          </div>
+          <div className="mt-2 h-4 w-4 rounded-full bg-gray-200"></div>
+          <div className="mt-2 text-xs text-gray-400 sm:text-sm">
+            Wed, 11th Jan
+          </div>
         </div>
 
         {/* Step: Out for Delivery */}
-        <div className="flex flex-col items-center mb-4 sm:mb-0 sm:w-1/5">
-          <div className="text-sm font-bold text-gray-200 sm:text-base">Out For Delivery</div>
-          <div className="w-4 h-4 mt-2 bg-gray-200 rounded-full"></div>
-          <div className="mt-2 text-xs text-gray-400 sm:text-sm">Wed, 11th Jan</div>
+        <div className="mb-4 flex flex-col items-center sm:mb-0 sm:w-1/5">
+          <div className="text-sm font-bold text-gray-200 sm:text-base">
+            Out For Delivery
+          </div>
+          <div className="mt-2 h-4 w-4 rounded-full bg-gray-200"></div>
+          <div className="mt-2 text-xs text-gray-400 sm:text-sm">
+            Wed, 11th Jan
+          </div>
         </div>
 
         {/* Step: Delivered */}
         <div className="flex flex-col items-center sm:w-1/5">
-          <div className="text-sm font-bold text-gray-200 sm:text-base">Delivered</div>
-          <div className="w-4 h-4 mt-2 bg-gray-200 rounded-full"></div>
+          <div className="text-sm font-bold text-gray-200 sm:text-base">
+            Delivered
+          </div>
+          <div className="mt-2 h-4 w-4 rounded-full bg-gray-200"></div>
           <div className="mt-2 text-xs text-gray-400 sm:text-sm">
             Expected by, Mon 16th
           </div>
@@ -54,9 +72,9 @@ const Track = () => {
       </div>
 
       {/* Horizontal Line for Progress */}
-      <div className="relative w-full h-1 mb-8 bg-gray-600 sm:mb-12">
+      <div className="relative mb-8 h-1 w-full bg-gray-600 sm:mb-12">
         <div
-          className="absolute top-0 left-0 h-1 bg-green-500"
+          className="absolute left-0 top-0 h-1 bg-green-500"
           style={{ width: '40%' }}
         ></div>
       </div>
@@ -69,8 +87,12 @@ const Track = () => {
           <div className="mb-6">
             <h3 className="mb-4 text-lg font-bold sm:text-xl">PAYMENT</h3>
             <div className="flex flex-wrap items-center">
-              <div className="px-3 py-1 mb-2 mr-3 text-white bg-blue-500 rounded sm:mb-0">VISA</div>
-              <span className="text-sm text-gray-400 sm:text-base">Visa **56</span>
+              <div className="mb-2 mr-3 rounded bg-blue-500 px-3 py-1 text-white sm:mb-0">
+                VISA
+              </div>
+              <span className="text-sm text-gray-400 sm:text-base">
+                Visa **56
+              </span>
             </div>
           </div>
 
@@ -86,7 +108,9 @@ const Track = () => {
 
           {/* Current Location */}
           <div>
-            <h3 className="mb-4 text-lg font-bold sm:text-xl">CURRENT LOCATION</h3>
+            <h3 className="mb-4 text-lg font-bold sm:text-xl">
+              CURRENT LOCATION
+            </h3>
             <p className="text-sm text-gray-400 sm:text-base">
               KG 56 Avenue, <br />
               Kigali, Rwanda
@@ -97,32 +121,29 @@ const Track = () => {
         {/* Right Side: Product Image and Summary */}
         <div>
           {/* Product Image */}
-          <div className="flex justify-center mb-6">
+          <div className="mb-6 flex justify-center">
             <img
               src="/products/product-5.png"
               alt="Kimono"
-              className="object-contain w-32 h-auto sm:w-48"
+              className="h-auto w-32 object-contain sm:w-48"
             />
           </div>
 
           {/* Summary */}
           <div className="text-sm text-gray-400 sm:text-base">
-            <div className="flex justify-between mb-2">
+            <div className="mb-2 flex justify-between">
               <span>Number of Kimonos</span>
               <span>2</span>
             </div>
-            <div className="flex justify-between mb-2">
+            <div className="mb-2 flex justify-between">
               <span>AMOUNT</span>
               <span>$5,396</span>
             </div>
-            <div className="flex justify-between mb-2">
+            <div className="mb-2 flex justify-between">
               <span>SHIPPING</span>
               <span>$50</span>
             </div>
-            <div className="flex justify-between mt-4 font-bold text-white">
-              <span>GRAND TOTAL</span>
-              <span>$5,446</span>
-            </div>
+            <div className="mt-4 flex justify-between font-bold text-white"></div>
           </div>
         </div>
       </div>
