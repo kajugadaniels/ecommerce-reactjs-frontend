@@ -1,4 +1,3 @@
-// Sidebar.tsx
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getCategories, getSizes } from '@/Helpers/CallRequestHelper';
@@ -51,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       try {
         const response = await getCategories();
         if (response.status === 200) {
-          setCategories(response.data.results);
+          setCategories(response.data);
         } else {
           toast.error(response.data.error || 'Failed to fetch categories.');
         }
@@ -65,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       try {
         const response = await getSizes();
         if (response.status === 200) {
-          setSizes(response.data.results);
+          setSizes(response.data);
         } else {
           toast.error(response.data.error || 'Failed to fetch sizes.');
         }
@@ -189,21 +188,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
               Categories
             </h3>
             <ul className="mt-4 space-y-2">
-              {categories.map((category) => (
-                <li key={category.slug}>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 text-indigo-600 form-checkbox"
-                      checked={selectedCategories.includes(category.slug)}
-                      onChange={() => handleCategoryChange(category.slug)}
-                    />
-                    <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
-                      {category.name}
-                    </span>
-                  </label>
-                </li>
-              ))}
+              {categories.length > 0 ? (
+                categories.map((category) => (
+                  <li key={category.slug}>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-indigo-600 form-checkbox"
+                        checked={selectedCategories.includes(category.slug)}
+                        onChange={() => handleCategoryChange(category.slug)}
+                      />
+                      <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
+                        {category.name}
+                      </span>
+                    </label>
+                  </li>
+                ))
+              ) : (
+                <li className="text-sm text-gray-700">No categories available.</li>
+              )}
             </ul>
           </li>
 

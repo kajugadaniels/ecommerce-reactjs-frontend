@@ -109,11 +109,10 @@ const Latest = () => {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSort = e.target.value;
     setSortBy(selectedSort);
-    // Assuming you have a state to hold current filters
-    // For simplicity, refetch products with new sort and existing filters
+    // Refetch products with new sort and existing filters
     // You might want to maintain current filter state separately
     // Here, we'll assume filters are empty if not maintained
-    // Ideally, lift filter state up to a higher component
+    // Ideally, lift filter state up to a higher component or use Context
     fetchProducts(
       {
         categories: [],
@@ -187,7 +186,11 @@ const Latest = () => {
       </div>
 
       {/* Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onFilterChange={handleFilterChange} />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        onFilterChange={handleFilterChange}
+      />
 
       {/* Main Content */}
       <div className="container mx-auto mt-4 px-4 md:ml-[20%] md:w-4/5">
