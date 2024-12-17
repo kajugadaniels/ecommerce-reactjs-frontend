@@ -30,7 +30,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="relative z-50 flex min-h-[80px] bg-black px-4 py-4 font-sans tracking-wide shadow-md sm:px-10">
-      <div className="flex flex-wrap items-center w-full gap-5">
+      <div className="flex w-full flex-wrap items-center gap-5">
         <Link href="/">
           <img
             src="/logo/white-logo.png"
@@ -48,7 +48,11 @@ const Header: React.FC = () => {
                   <button
                     onClick={item.action}
                     className={`hover:text-[#D87D4A] ${
-                      item.name === 'Logout' ? '' : (item.route === pathname ? 'text-[#D87D4A]' : 'text-[#fff]')
+                      item.name === 'Logout'
+                        ? ''
+                        : item.route === pathname
+                          ? 'text-[#D87D4A]'
+                          : 'text-[#fff]'
                     } block text-[15px] font-semibold`}
                   >
                     {item.name}
@@ -103,7 +107,7 @@ const Header: React.FC = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 fill-black"
+                className="h-4 w-4 fill-black"
                 viewBox="0 0 320.591 320.591"
               >
                 <path d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z" />
@@ -126,9 +130,9 @@ const Header: React.FC = () => {
             isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 ease-in-out lg:hidden`}
         >
-          <ul className="flex flex-col p-6 space-y-4">
+          <ul className="flex flex-col space-y-4 p-6">
             {menuItems.map((item) => (
-              <li key={item.name} className="py-3 border-b">
+              <li key={item.name} className="border-b py-3">
                 {item.action ? (
                   <button
                     onClick={() => {
@@ -136,8 +140,12 @@ const Header: React.FC = () => {
                       setIsMenuOpen(false);
                     }}
                     className={`hover:text-[#D87D4A] ${
-                      item.name === 'Logout' ? '' : (item.route === pathname ? 'text-[#D87D4A]' : 'text-[#000]')
-                    } text-lg font-semibold w-full text-left`}
+                      item.name === 'Logout'
+                        ? ''
+                        : item.route === pathname
+                          ? 'text-[#D87D4A]'
+                          : 'text-[#000]'
+                    } w-full text-left text-lg font-semibold`}
                   >
                     {item.name}
                   </button>
