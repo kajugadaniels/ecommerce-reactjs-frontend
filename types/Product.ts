@@ -1,24 +1,6 @@
-export interface Category {
-    id: number;
-    name: string;
-    slug: string;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface Size {
-    id: number;
-    name: string;
-    slug: string;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface ProductImage {
-    id: number;
-    image: string;
-    created_at: string;
-}
+import { Category } from './Category';
+import { Size } from './Size';
+import { ProductImage } from './ProductImage';
 
 export interface Product {
     id: number;
