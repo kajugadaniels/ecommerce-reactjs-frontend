@@ -14,7 +14,7 @@ const RandomProducts: React.FC = () => {
       try {
         const response = await getAllProducts();
         if (response.status === 200) {
-          const allProducts: Product[] = response.data;
+          const allProducts: Product[] = response.data.results; // Access results
           // Shuffle the array and select first 4
           const shuffled = allProducts.sort(() => 0.5 - Math.random());
           setRandomProducts(shuffled.slice(0, 4));
@@ -36,7 +36,9 @@ const RandomProducts: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 mt-24 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div
+      className="grid grid-cols-1 gap-6 mt-24 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
       {randomProducts.map((product) => (
         <div
           key={product.id}
@@ -52,11 +54,11 @@ const RandomProducts: React.FC = () => {
               alt={product.title}
             />
           </div>
-          <div className="flex items-center justify-center px-4 py-2 sm:px-10">
+          <div className="flex flex-col items-center justify-center px-4 py-2 sm:px-10">
             <h3 className="text-lg font-extrabold text-center text-gray-800 sm:text-base">
               {product.title}
             </h3>
-            <p className="mt-2 text-sm text-gray-600">${product.price}</p>
+            <p className="mt-2 text-sm text-gray-600">${parseFloat(product.price).toFixed(2)}</p>
           </div>
         </div>
       ))}
