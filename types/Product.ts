@@ -24,7 +24,7 @@ export interface Product {
     id: number;
     title: string;
     slug: string;
-    price: number;
+    price: string;
     category: Category;
     product_sizes: Size[];
     image: string;
