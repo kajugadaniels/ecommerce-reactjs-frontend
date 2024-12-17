@@ -1,7 +1,10 @@
+// client/app/(user)/customize/[slug]/page.tsx
+
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { getProduct, getProducts } from '@/Helpers/CallRequestHelper';
+import { getProduct } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
 import Link from 'next/link';
 import { FaAngleDoubleDown } from 'react-icons/fa';
@@ -18,7 +21,6 @@ const Customize = () => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [availableColors, setAvailableColors] = useState<string[]>([]);
-  const [quantity, setQuantity] = useState<number>(1);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [relatedLoading, setRelatedLoading] = useState<boolean>(false);
@@ -32,8 +34,7 @@ const Customize = () => {
         if (response.status === 200) {
           setProduct(response.data);
           setMainImage(response.data.image); // Set main image to primary image
-          
-          // Extract available colors from product images
+          // Extract available colors
           const colorsSet = new Set<string>();
           response.data.images.forEach((img) => {
             if (img.color) {
@@ -56,19 +57,16 @@ const Customize = () => {
 
   // Fetch related products based on category
   useEffect(() => {
-    const fetchRelatedProducts = async () => {
-      if (product) {
+    if (product) {
+      const fetchRelatedProducts = async () => {
         setRelatedLoading(true);
         try {
-          const response = await getProducts({
-            category: product.category.slug,
-            ordering: '-created_at',
-            limit: 4,
-          });
+          const response = await getProduct(product.slug);
           if (response.status === 200) {
-            const related = response.data.results.filter(
-              (item: Product) => item.id !== product.id
-            );
+            const relatedResponse = await getProduct(product.slug);
+            // You might want to implement a separate endpoint for related products
+            // For now, we'll reuse the getProducts function with category filter
+            const related = await fetchRelatedProductsByCategory(product.category.slug, product.id);
             setRelatedProducts(related);
           } else {
             toast.error(response.data.error || 'Failed to fetch related products.');
@@ -78,23 +76,33 @@ const Customize = () => {
         } finally {
           setRelatedLoading(false);
         }
-      }
-    };
+      };
 
-    fetchRelatedProducts();
+      fetchRelatedProducts();
+    }
   }, [product]);
+
+  // Helper function to fetch related products by category
+  const fetchRelatedProductsByCategory = async (categorySlug: string, currentProductId: number): Promise<Product[]> => {
+    try {
+      const response = await getProduct(categorySlug);
+      if (response.status === 200) {
+        const allProducts = response.data.results;
+        const related = allProducts.filter((item: Product) => item.id !== currentProductId);
+        return related;
+      } else {
+        toast.error(response.data.error || 'Failed to fetch related products.');
+        return [];
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'An error occurred while fetching related products.');
+      return [];
+    }
+  };
 
   // Handle thumbnail click
   const handleThumbnailClick = (imageUrl: string) => {
     setMainImage(imageUrl);
-  };
-
-  // Handle quantity change
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (value >= 1) {
-      setQuantity(value);
-    }
   };
 
   // Handle Add to Cart
@@ -116,7 +124,7 @@ const Customize = () => {
         image: mainImage,
         selectedSize: selectedSize,
         selectedColor: selectedColor,
-        quantity: quantity,
+        quantity: 1,
       };
       addToCart(cartItem);
       toast.success('Product added to cart!');
@@ -184,7 +192,6 @@ const Customize = () => {
               src={mainImage}
               alt="Kimono Main"
               className="object-cover w-full h-auto rounded-lg"
-              loading="lazy"
             />
 
             {/* Badge */}
@@ -268,18 +275,6 @@ const Customize = () => {
             </div>
           </div>
 
-          {/* Quantity Selection */}
-          <div>
-            <h2 className="mb-4 text-lg font-semibold">Select Quantity</h2>
-            <input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={handleQuantityChange}
-              className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            />
-          </div>
-
           {/* Action Buttons */}
           <div className="space-y-4">
             <button
@@ -342,42 +337,36 @@ const Customize = () => {
       <div className="container px-4 mx-auto mt-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* Repeated Product Blocks */}
-          {relatedLoading ? (
-            <p className="text-center text-gray-700">Loading related products...</p>
-          ) : relatedProducts.length > 0 ? (
-            relatedProducts.map((relatedProduct) => (
-              <div
-                key={relatedProduct.id}
-                className="overflow-hidden font-sans bg-gray-300 rounded-lg shadow-md"
-              >
-                <div className="flex min-h-[256px] items-center justify-center">
-                  <img
-                    src={relatedProduct.image}
-                    alt={`Product ${relatedProduct.title}`}
-                    className="object-contain w-full"
-                  />
-                </div>
-                <div className="p-6 bg-white">
-                  <h3 className="text-[#D87D4A]">Customize</h3>
-                  <h3 className="text-gray-800">{relatedProduct.title}</h3>
-                  <p className="mt-2 text-sm text-gray-700">
-                    {relatedProduct.product_sizes.length} Sizes &middot; {relatedProduct.images.length} Images
-                  </p>
-                  <div className="mt-4 text-lg font-semibold text-gray-700">
-                    ${parseFloat(relatedProduct.price).toFixed(2)}
-                  </div>
-                  {/* Customize Button */}
-                  <Link href={`/customize/${relatedProduct.slug}`}>
-                    <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
-                      Customize
-                    </button>
-                  </Link>
-                </div>
+          {relatedProducts.map((relatedProduct) => (
+            <div
+              key={relatedProduct.id}
+              className="overflow-hidden font-sans bg-gray-300 rounded-lg shadow-md"
+            >
+              <div className="flex min-h-[256px] items-center justify-center">
+                <img
+                  src={relatedProduct.image}
+                  alt={`Product ${relatedProduct.title}`}
+                  className="object-contain w-full"
+                />
               </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-700">No related products found.</p>
-          )}
+              <div className="p-6 bg-white">
+                <h3 className="text-[#D87D4A]">Customize</h3>
+                <h3 className="text-gray-800">{relatedProduct.title}</h3>
+                <p className="mt-2 text-sm text-gray-700">
+                  {relatedProduct.product_sizes.length} Sizes &middot; {relatedProduct.images.length} Images
+                </p>
+                <div className="mt-4 text-lg font-semibold text-gray-700">
+                  ${parseFloat(relatedProduct.price).toFixed(2)}
+                </div>
+                {/* Customize Button */}
+                <Link href={`/customize/${relatedProduct.slug}`}>
+                  <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
+                    Customize
+                  </button>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

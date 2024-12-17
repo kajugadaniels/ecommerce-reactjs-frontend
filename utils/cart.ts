@@ -1,4 +1,5 @@
 export interface CartItem {
+    userId: number;
     productId: number;
     title: string;
     slug: string;
@@ -21,7 +22,8 @@ export const addToCart = (item: CartItem): void => {
         (cartItem) =>
             cartItem.productId === item.productId &&
             cartItem.selectedSize === item.selectedSize &&
-            cartItem.selectedColor === item.selectedColor
+            cartItem.selectedColor === item.selectedColor &&
+            cartItem.userId === item.userId
     );
 
     if (existingItemIndex !== -1) {
@@ -42,7 +44,8 @@ export const removeFromCart = (item: CartItem): void => {
             !(
                 cartItem.productId === item.productId &&
                 cartItem.selectedSize === item.selectedSize &&
-                cartItem.selectedColor === item.selectedColor
+                cartItem.selectedColor === item.selectedColor &&
+                cartItem.userId === item.userId
             )
     );
     localStorage.setItem('cart', JSON.stringify(cart));
