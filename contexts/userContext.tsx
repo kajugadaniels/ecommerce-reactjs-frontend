@@ -1,23 +1,23 @@
 'use client';
 import { createContext, ReactNode, useContext, useState, useEffect } from 'react';
+import { logoutUser } from '@/Helpers/CallRequestHelper';
 
 interface Props {
   children: ReactNode;
 }
 
 type UserData = {
-  id: string;
-  firstName: string;
-  lastName: string;
+  id: number;
+  name: string;
   email: string;
-  phoneNumber: string;
-  accountType: string;
-  verified: boolean;
-  dob: string;
-  createdOn: string;
-  deletedOn: string | null;
-  lockTime: string | null;
-  lastLogin: string;
+  phone_number: string;
+  gender?: string;
+  date_of_birth?: string;
+  status?: string;
+  role?: string;
+  image?: string;
+  bio?: string;
+  created_at?: string;
 };
 
 type UserContextType = {
@@ -75,11 +75,21 @@ export function UserProvider({ children }: Props) {
     }
   }, [token]);
 
-  const logout = () => {
-    setUserData(null);
-    setToken(null);
-    // Optionally, redirect to login page
-    window.location.href = '/signin';
+  const logout = async () => {
+    try {
+      if (token) {
+        await logoutUser(token);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    } finally {
+      setUserData(null);
+      setToken(null);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      // Redirect to login page
+      window.location.href = '/signin';
+    }
   };
 
   return (
