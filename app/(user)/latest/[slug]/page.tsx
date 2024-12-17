@@ -171,7 +171,7 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Customize Button */}
-            <Link href={`/customize?slug=${product.slug}`}>
+            <Link href={`/customize/${product.slug}`}>
               <button className="flex items-center justify-center w-full px-4 py-4 font-semibold text-white transition rounded-full bg-[#D87D4A]">
                 Customize
               </button>
