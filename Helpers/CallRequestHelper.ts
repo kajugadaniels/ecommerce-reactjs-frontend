@@ -51,7 +51,7 @@ export const logoutUser = async (token: string) => {
 
 export const getHighPricedProducts = async () => {
   try {
-    const response = await apiCaller.get('/api/products/', {
+    const response = await apiCaller.get('/products/', {
       params: {
         ordering: '-price',
         limit: 4,
@@ -66,7 +66,7 @@ export const getHighPricedProducts = async () => {
 
 export const getAllProducts = async () => {
   try {
-    const response = await apiCaller.get('/api/products/');
+    const response = await apiCaller.get('/products/');
     return response;
   } catch (e: any) {
     console.error('Fetch All Products Error:', e.response || e.message);
