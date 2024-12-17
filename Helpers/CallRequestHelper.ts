@@ -64,6 +64,7 @@ export const getHighPricedProducts = async () => {
   }
 };
 
+// Fetch All Products
 export const getAllProducts = async () => {
   try {
     const response = await apiCaller.get('/products/');
