@@ -83,3 +83,13 @@ export const getCategories = async () => {
     return e.response;
   }
 };
+
+export const getSizes = async () => {
+  try {
+    const response = await apiCaller.get('/sizes/');
+    return response;
+  } catch (e: any) {
+    console.error('Fetch Sizes Error:', e.response || e.message);
+    return e.response;
+  }
+};
