@@ -1,4 +1,3 @@
-// client/components/Sidebar.tsx
 import React, { useState, useEffect } from 'react';
 import { getCategories, getSizes } from '@/Helpers/CallRequestHelper';
 import { Category } from '@/types/Category';

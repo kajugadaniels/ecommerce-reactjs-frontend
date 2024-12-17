@@ -8,26 +8,26 @@ import { Product } from '@/types/Product';
 import { toast } from 'react-toastify';
 
 interface Filters {
-  categories: string[];
-  sizes: string[];
+  category: string | null;
+  size: string | null;
   color: string;
   priceMin: number | null;
   priceMax: number | null;
-  productType: string[]; // Updated to include productType
+  productType: string | null;
 }
 
 const Latest = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [sortBy, setSortBy] = useState<string>('');
+  const [sortBy, setSortBy] = useState<string>(''); // e.g., 'price-low-to-high', 'price-high-to-low', 'newest'
   const [currentFilters, setCurrentFilters] = useState<Filters>({
-    categories: [],
-    sizes: [],
+    category: null,
+    size: null,
     color: '',
     priceMin: null,
     priceMax: null,
-    productType: [], // Initialize productType
+    productType: null,
   });
 
   // Prevent body scroll when sidebar is open on small devices
@@ -62,11 +62,11 @@ const Latest = () => {
       const params: any = {};
 
       // Apply filters
-      if (filters.categories.length > 0) {
-        params.category = filters.categories;
+      if (filters.category) {
+        params.category = filters.category;
       }
-      if (filters.sizes.length > 0) {
-        params.size = filters.sizes;
+      if (filters.size) {
+        params.size = filters.size;
       }
       if (filters.color) {
         params.color = filters.color;
@@ -77,7 +77,7 @@ const Latest = () => {
       if (filters.priceMax !== null) {
         params.price_max = filters.priceMax;
       }
-      if (filters.productType.length > 0) {
+      if (filters.productType) {
         params.product_type = filters.productType;
       }
 
