@@ -13,21 +13,21 @@ interface Filters {
   color: string;
   priceMin: number | null;
   priceMax: number | null;
-  bestFor: string[];
+  productType: string[]; // Updated to include productType
 }
 
 const Latest = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [sortBy, setSortBy] = useState<string>(''); // e.g., 'price-low-to-high', 'price-high-to-low', 'newest'
+  const [sortBy, setSortBy] = useState<string>('');
   const [currentFilters, setCurrentFilters] = useState<Filters>({
     categories: [],
     sizes: [],
     color: '',
     priceMin: null,
     priceMax: null,
-    bestFor: [],
+    productType: [], // Initialize productType
   });
 
   // Prevent body scroll when sidebar is open on small devices
@@ -77,8 +77,8 @@ const Latest = () => {
       if (filters.priceMax !== null) {
         params.price_max = filters.priceMax;
       }
-      if (filters.bestFor.length > 0) {
-        params.best_for = filters.bestFor;
+      if (filters.productType.length > 0) {
+        params.product_type = filters.productType;
       }
 
       // Apply sorting
@@ -97,7 +97,7 @@ const Latest = () => {
 
       const response = await getProducts(params);
       if (response.status === 200) {
-        setProducts(response.data.results); // Corrected: Use response.data.results
+        setProducts(response.data.results); // Ensure products is set to an array
       } else {
         toast.error(response.data.error || 'Failed to fetch products.');
       }

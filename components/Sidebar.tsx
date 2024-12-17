@@ -12,12 +12,12 @@ interface SidebarProps {
 }
 
 interface Filters {
-  categories: string[];
-  sizes: string[];
+  category: string | null;
+  size: string | null;
   color: string;
   priceMin: number | null;
   priceMax: number | null;
-  productType: string[]; // Updated to handle multiple product types
+  productType: string | null;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) => {
@@ -36,9 +36,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
   const [sizes, setSizes] = useState<Size[]>([]);
 
   // State to hold filter selections
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedProductTypes, setSelectedProductTypes] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedProductType, setSelectedProductType] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
@@ -83,28 +83,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
     }));
   };
 
-  // Handle checkbox changes for categories
+  // Handle selection changes ensuring only one selection per filter
   const handleCategoryChange = (slug: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(slug) ? prev.filter((item) => item !== slug) : [...prev, slug]
-    );
+    setSelectedCategory((prev) => (prev === slug ? null : slug));
   };
 
-  // Handle checkbox changes for sizes
   const handleSizeChange = (slug: string) => {
-    setSelectedSizes((prev) =>
-      prev.includes(slug) ? prev.filter((item) => item !== slug) : [...prev, slug]
-    );
+    setSelectedSize((prev) => (prev === slug ? null : slug));
   };
 
-  // Handle checkbox changes for product types
   const handleProductTypeChange = (type: string) => {
-    setSelectedProductTypes((prev) =>
-      prev.includes(type) ? prev.filter((item) => item !== type) : [...prev, type]
-    );
+    setSelectedProductType((prev) => (prev === type ? null : type));
   };
 
-  // Handle color change
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
   };
@@ -112,12 +103,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
   // Handle filter submission
   const applyFilters = () => {
     const filters: Filters = {
-      categories: selectedCategories,
-      sizes: selectedSizes,
+      category: selectedCategory,
+      size: selectedSize,
       color: selectedColor,
       priceMin: priceMin,
       priceMax: priceMax,
-      productType: selectedProductTypes,
+      productType: selectedProductType,
     };
     onFilterChange(filters);
     onClose();
@@ -125,19 +116,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
 
   // Handle filter reset
   const resetFilters = () => {
-    setSelectedCategories([]);
-    setSelectedSizes([]);
-    setSelectedProductTypes([]);
+    setSelectedCategory(null);
+    setSelectedSize(null);
+    setSelectedProductType(null);
     setSelectedColor('');
     setPriceMin(null);
     setPriceMax(null);
     onFilterChange({
-      categories: [],
-      sizes: [],
+      category: null,
+      size: null,
       color: '',
       priceMin: null,
       priceMax: null,
-      productType: [],
+      productType: null,
     });
     onClose();
   };
@@ -192,9 +183,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
                   <li key={category.slug}>
                     <label className="flex items-center space-x-2">
                       <input
-                        type="checkbox"
-                        className="w-4 h-4 text-indigo-600 form-checkbox"
-                        checked={selectedCategories.includes(category.slug)}
+                        type="radio"
+                        name="category"
+                        className="w-4 h-4 text-indigo-600 form-radio"
+                        checked={selectedCategory === category.slug}
                         onChange={() => handleCategoryChange(category.slug)}
                       />
                       <span className="block px-3 py-2 transition-colors rounded hover:bg-gray-700">
@@ -246,9 +238,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
                     {['Male', 'Female', 'Both'].map((type) => (
                       <label key={type} className="flex items-center space-x-2">
                         <input
-                          type="checkbox"
-                          className="w-4 h-4 text-indigo-600 form-checkbox"
-                          checked={selectedProductTypes.includes(type)}
+                          type="radio"
+                          name="productType"
+                          className="w-4 h-4 text-indigo-600 form-radio"
+                          checked={selectedProductType === type}
                           onChange={() => handleProductTypeChange(type)}
                         />
                         <span className="text-sm">{type}</span>
@@ -289,12 +282,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
                     {['Red', 'Blue', 'Green', 'Black', 'White'].map((color) => (
                       <label key={color} className="flex items-center space-x-2">
                         <input
-                          type="checkbox"
-                          className="w-4 h-4 text-indigo-600 form-checkbox"
+                          type="radio"
+                          name="color"
+                          className="w-4 h-4 text-indigo-600 form-radio"
                           checked={selectedColor === color}
-                          onChange={() =>
-                            handleColorChange(selectedColor === color ? '' : color)
-                          }
+                          onChange={() => handleColorChange(color)}
                         />
                         <span className="text-sm">{color}</span>
                       </label>
@@ -393,9 +385,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
                       sizes.map((size) => (
                         <label key={size.slug} className="flex items-center space-x-2">
                           <input
-                            type="checkbox"
-                            className="w-4 h-4 text-indigo-600 form-checkbox"
-                            checked={selectedSizes.includes(size.slug)}
+                            type="radio"
+                            name="size"
+                            className="w-4 h-4 text-indigo-600 form-radio"
+                            checked={selectedSize === size.slug}
                             onChange={() => handleSizeChange(size.slug)}
                           />
                           <span className="text-sm">{size.name}</span>
