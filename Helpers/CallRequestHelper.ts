@@ -48,3 +48,18 @@ export const logoutUser = async (token: string) => {
     return e.response;
   }
 };
+
+export const getHighPricedProducts = async () => {
+  try {
+    const response = await apiCaller.get('/api/products/', {
+      params: {
+        ordering: '-price',
+        limit: 4,
+      },
+    });
+    return response;
+  } catch (e: any) {
+    console.error('Fetch High-Priced Products Error:', e.response || e.message);
+    return e.response;
+  }
+};
