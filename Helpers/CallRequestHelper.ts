@@ -74,6 +74,16 @@ export const getAllProducts = async () => {
   }
 };
 
+export const getProducts = async (params: any) => {
+  try {
+    const response = await apiCaller.get('/products/', { params });
+    return response;
+  } catch (e: any) {
+    console.error('Fetch Products Error:', e.response || e.message);
+    return e.response;
+  }
+};
+
 export const getCategories = async () => {
   try {
     const response = await apiCaller.get('/categories/');
