@@ -1,224 +1,222 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Sidebar from '@/components/Sidebar';
-import Link from 'next/link';
-import { getProducts, getProduct } from '@/Helpers/CallRequestHelper';
+import { useParams } from 'next/navigation';
+import { getProduct, getProducts } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
+import Link from 'next/link';
+import { FaAngleDoubleDown } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-interface Filters {
-  category: string | null;
-  size: string | null;
-  color: string;
-  priceMin: number | null;
-  priceMax: number | null;
-  productType: string | null;
-}
+const ProductDetailPage = () => {
+  const params = useParams();
+  const { slug } = params as { slug: string };
 
-const Latest = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [sortBy, setSortBy] = useState<string>(''); // e.g., 'price-low-to-high', 'price-high-to-low', 'newest'
-  const [currentFilters, setCurrentFilters] = useState<Filters>({
-    category: null,
-    size: null,
-    color: '',
-    priceMin: null,
-    priceMax: null,
-    productType: null,
-  });
+  const [product, setProduct] = useState<Product | null>(null);
+  const [mainImage, setMainImage] = useState<string>('');
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [relatedLoading, setRelatedLoading] = useState<boolean>(false);
 
-  // Prevent body scroll when sidebar is open on small devices
+  // Fetch product details
   useEffect(() => {
-    if (isSidebarOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [isSidebarOpen]);
-
-  // Automatically close sidebar when resizing to large devices
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768 && isSidebarOpen) {
-        setIsSidebarOpen(false);
+    const fetchProduct = async () => {
+      setLoading(true);
+      try {
+        const response = await getProduct(slug);
+        if (response.status === 200) {
+          setProduct(response.data);
+          setMainImage(response.data.image); // Set main image to primary image
+        } else {
+          toast.error(response.data.error || 'Failed to fetch product details.');
+        }
+      } catch (error: any) {
+        toast.error(error.response?.data?.error || 'An error occurred while fetching product details.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isSidebarOpen]);
+    fetchProduct();
+  }, [slug]);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
-  // Function to fetch products based on filters and sort
-  const fetchProducts = async (filters: Filters, sort: string) => {
-    setLoading(true);
-    try {
-      const params: any = {};
-
-      // Apply filters
-      if (filters.category) {
-        params.category = filters.category;
-      }
-      if (filters.size) {
-        params.size = filters.size;
-      }
-      if (filters.color) {
-        params.color = filters.color;
-      }
-      if (filters.priceMin !== null) {
-        params.price_min = filters.priceMin;
-      }
-      if (filters.priceMax !== null) {
-        params.price_max = filters.priceMax;
-      }
-      if (filters.productType) {
-        params.product_type = filters.productType;
-      }
-
-      // Apply sorting
-      if (sort) {
-        if (sort === 'price-low-to-high') {
-          params.ordering = 'price';
-        } else if (sort === 'price-high-to-low') {
-          params.ordering = '-price';
-        } else if (sort === 'newest') {
-          params.ordering = '-created_at';
-        }
-      } else {
-        // Default sorting
-        params.ordering = '-created_at';
-      }
-
-      const response = await getProducts(params);
-      if (response.status === 200) {
-        setProducts(response.data.results); // Ensure products is set to an array
-      } else {
-        toast.error(response.data.error || 'Failed to fetch products.');
-      }
-    } catch (error: any) {
-      toast.error(error.response?.data?.error || 'An error occurred while fetching products.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Handle filter changes from Sidebar
-  const handleFilterChange = (filters: Filters) => {
-    setCurrentFilters(filters);
-    fetchProducts(filters, sortBy);
-  };
-
-  // Handle sort changes
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedSort = e.target.value;
-    setSortBy(selectedSort);
-    fetchProducts(currentFilters, selectedSort);
-  };
-
-  // Initial fetch on component mount
+  // Fetch related products based on category
   useEffect(() => {
-    fetchProducts(currentFilters, sortBy);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (product) {
+      const fetchRelatedProducts = async () => {
+        setRelatedLoading(true);
+        try {
+          const response = await getProducts({
+            category: product.category.slug,
+            ordering: '-created_at',
+            limit: 4, // Adjust the limit as needed
+          });
+          if (response.status === 200) {
+            // Exclude the current product from related products
+            const related = response.data.results.filter(
+              (item: Product) => item.id !== product.id
+            );
+            setRelatedProducts(related);
+          } else {
+            toast.error(response.data.error || 'Failed to fetch related products.');
+          }
+        } catch (error: any) {
+          toast.error(error.response?.data?.error || 'An error occurred while fetching related products.');
+        } finally {
+          setRelatedLoading(false);
+        }
+      };
+
+      fetchRelatedProducts();
+    }
+  }, [product]);
+
+  // Handle thumbnail click
+  const handleThumbnailClick = (imageUrl: string) => {
+    setMainImage(imageUrl);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-700">Loading product details...</p>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-red-500">Product not found.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="relative">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 text-white bg-black">
-        <div>
-          <h1 className="text-xl md:text-2xl">Enso By You (79)</h1>
-        </div>
-        <div className="flex items-center space-x-4">
-          {/* Toggle Filters Button for Small Devices */}
-          <button
-            className="px-4 py-2 text-sm text-black bg-gray-500 rounded md:hidden"
-            onClick={toggleSidebar}
-            aria-label="Toggle Filters"
-          >
-            {isSidebarOpen ? 'Hide Filters' : 'Show Filters'}
-          </button>
+    <div className="p-6 bg-black lg:p-32">
+      <div className="flex flex-col gap-8 lg:flex-row lg:gap-28">
+        {/* Image Section */}
+        <div className="flex flex-col items-center justify-center w-full lg:w-3/5">
+          {/* Main Image */}
+          <div className="w-full mb-4">
+            <img
+              src={mainImage}
+              alt={product.title}
+              className="object-contain w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
 
-          {/* Sort By Dropdown */}
-          <div className="relative">
-            <select
-              className="px-2 py-2 text-black bg-gray-400 rounded appearance-none focus:outline-none"
-              aria-label="Sort by"
-              value={sortBy}
-              onChange={handleSortChange}
-            >
-              <option value="">Sort By</option>
-              <option value="price-low-to-high">Price: Low to High</option>
-              <option value="price-high-to-low">Price: High to Low</option>
-              <option value="newest">Newest</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
+          {/* Thumbnails */}
+          <div className="flex space-x-4">
+            {product.images.map((img) => (
+              <button
+                key={img.id}
+                onClick={() => handleThumbnailClick(img.image)}
+                className={`border ${
+                  mainImage === img.image ? 'border-indigo-600' : 'border-transparent'
+                } rounded-lg overflow-hidden focus:outline-none`}
+                aria-label={`View image ${img.id}`}
               >
-                <path d="M5.516 7.548c.436-.446 1.043-.481 1.576 0L10 10.28l2.908-2.732c.533-.481 1.141-.446 1.576 0 .436.445.408 1.197 0 1.576l-4 3.908c-.408.396-1.019.481-1.576 0l-4-3.908c-.408-.379-.436-1.13 0-1.576z" />
-              </svg>
+                <img
+                  src={img.image}
+                  alt={`Thumbnail ${img.id}`}
+                  className="object-cover w-20 h-20"
+                  loading="lazy"
+                />
+              </button>
+            ))}
+            {/* Main Image as Thumbnail */}
+            <button
+              onClick={() => handleThumbnailClick(product.image)}
+              className={`border ${
+                mainImage === product.image ? 'border-indigo-600' : 'border-transparent'
+              } rounded-lg overflow-hidden focus:outline-none`}
+              aria-label="View main image"
+            >
+              <img
+                src={product.image}
+                alt="Main Thumbnail"
+                className="object-cover w-20 h-20"
+                loading="lazy"
+              />
+            </button>
+          </div>
+        </div>
+
+        {/* Product Description */}
+        <div className="flex flex-col items-start w-full text-white font-alata lg:w-2/5">
+          <h2 className="mb-4 text-2xl font-bold text-primary lg:text-3xl">
+            {product.title}
+          </h2>
+          <p className="mb-4 text-sm lg:text-base">
+            {product.description}
+          </p>
+          <p className="mb-6 text-sm text-gray-400">
+            Custom-made and delivered to you in 2 weeks or less.
+          </p>
+          <div className="w-full mt-8 bg-white rounded-lg shadow-md px-14 py-14 lg:mt-16 lg:w-3/4 lg:p-8">
+            {/* Description Text */}
+            <p className="mb-2 text-sm text-center text-black">
+              Custom-made and delivered to you in 4 weeks or less.
+            </p>
+
+            {/* Title */}
+            <h2 className="mb-4 text-center text-sm font-bold uppercase text-[#D87D4A]">
+              Customize Your Own {product.title}
+            </h2>
+
+            {/* Arrows */}
+            <div className="flex items-center justify-center mb-4">
+              <FaAngleDoubleDown className="h-24 w-24 text-[#D87D4A]" />
             </div>
+
+            {/* Customize Button */}
+            <Link href={`/customize?slug=${product.slug}`}>
+              <button className="flex items-center justify-center w-full px-4 py-4 font-semibold text-white transition rounded-full bg-[#D87D4A]">
+                Customize
+              </button>
+            </Link>
           </div>
         </div>
       </div>
 
-      {/* Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onFilterChange={handleFilterChange} />
+      {/* You May Also Like Section */}
+      <h2 className="mt-12 text-xl font-extrabold text-center text-white font-alata lg:text-3xl">
+        You May Also Like This
+      </h2>
 
-      {/* Main Content */}
-      <div className="container mx-auto mt-4 px-4 md:ml-[20%] md:w-4/5">
-        {/* Loading State */}
-        {loading ? (
-          <p className="text-center text-gray-700">Loading products...</p>
-        ) : products.length === 0 ? (
-          <p className="text-center text-gray-700">No products found.</p>
-        ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="overflow-hidden font-sans transition-transform transform bg-gray-300 rounded-lg shadow-lg hover:-translate-y-2"
-              >
-                <Link href={`/latest/detail/${product.slug}`}>
-                  <div className="flex items-center justify-center h-64 p-4">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="object-contain w-full h-full"
-                    />
-                  </div>
-                </Link>
-                <div className="p-6 bg-white">
-                  <h3 className="text-[#D87D4A]">Customize</h3>
-                  <h3 className="text-gray-800">{product.title}</h3>
-                  <p className="mt-2 text-sm text-gray-700">
-                    {product.product_sizes.length} Sizes &middot; {product.images.length} Images
-                  </p>
-                  <div className="mt-4 text-lg font-semibold text-gray-700">
-                    ${parseFloat(product.price).toFixed(2)}
-                  </div>
-                  {/* Customize Button */}
-                  <Link href={`/customize/${product.slug}`}>
-                    <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
-                      Customize
-                    </button>
-                  </Link>
+      <div className="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {relatedLoading ? (
+          <p className="text-center text-gray-700">Loading related products...</p>
+        ) : relatedProducts.length > 0 ? (
+          relatedProducts.map((relatedProduct) => (
+            <div
+              key={relatedProduct.id}
+              className="relative p-5 transition-all bg-gray-700 shadow-lg cursor-pointer rounded-2xl hover:-translate-y-2"
+            >
+              <Link href={`/latest/${relatedProduct.slug}`}>
+                <div className="w-full mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8 h-52 md:mb-2">
+                  <img
+                    src={relatedProduct.image}
+                    alt={relatedProduct.title}
+                    className="object-contain w-full h-full rounded-lg"
+                    loading="lazy"
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
+                <div className="flex items-center justify-center px-4 py-2 sm:px-10">
+                  <h3 className="text-lg font-extrabold text-center text-gray-800 sm:text-base">
+                    {relatedProduct.title}
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-700">No related products found.</p>
         )}
       </div>
     </div>
   );
 };
 
-export default Latest;
+export default ProductDetailPage;
