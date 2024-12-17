@@ -20,11 +20,10 @@ const Header: React.FC = () => {
     { name: 'Unisex', route: '/unisex' },
     { name: 'Men', route: '/men' },
     { name: 'Women', route: '/women' },
-    // Conditionally render Dashboard and Logout for authenticated users
     ...(userData
       ? [
           { name: 'Dashboard', route: '/dashboard' },
-          { name: 'Logout', route: '/logout', action: logout },
+          { name: 'Logout', route: '#', action: logout },
         ]
       : [{ name: 'Sign In', route: '/signin' }]),
   ];
@@ -49,7 +48,7 @@ const Header: React.FC = () => {
                   <button
                     onClick={item.action}
                     className={`hover:text-[#D87D4A] ${
-                      item.route === pathname ? 'text-[#D87D4A]' : 'text-[#fff]'
+                      item.name === 'Logout' ? '' : (item.route === pathname ? 'text-[#D87D4A]' : 'text-[#fff]')
                     } block text-[15px] font-semibold`}
                   >
                     {item.name}
@@ -137,7 +136,7 @@ const Header: React.FC = () => {
                       setIsMenuOpen(false);
                     }}
                     className={`hover:text-[#D87D4A] ${
-                      item.route === pathname ? 'text-[#D87D4A]' : 'text-[#000]'
+                      item.name === 'Logout' ? '' : (item.route === pathname ? 'text-[#D87D4A]' : 'text-[#000]')
                     } text-lg font-semibold w-full text-left`}
                   >
                     {item.name}
