@@ -1,18 +1,26 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
 import Link from 'next/link';
-import useLatestProducts from '@/hooks/useLatestProducts';
+import { getProducts } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
 import { toast } from 'react-toastify';
 
+interface Filters {
+  categories: string[];
+  sizes: string[];
+  color: string;
+  priceMin: number | null;
+  priceMax: number | null;
+  bestFor: string[];
+}
+
 const Latest = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [filters, setFilters] = useState<Record<string, any>>({});
-
-  // Fetch products based on filters
-  const { products, loading } = useLatestProducts(filters);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<string>(''); // e.g., 'price-low-to-high', 'price-high-to-low', 'newest'
 
   // Prevent body scroll when sidebar is open on small devices
   useEffect(() => {
@@ -39,9 +47,100 @@ const Latest = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  // Function to fetch products based on filters and sort
+  const fetchProducts = async (filters: Filters, sort: string) => {
+    setLoading(true);
+    try {
+      const params: any = {};
+
+      // Apply filters
+      if (filters.categories.length > 0) {
+        params.category = filters.categories;
+      }
+      if (filters.sizes.length > 0) {
+        params.size = filters.sizes;
+      }
+      if (filters.color) {
+        params.color = filters.color;
+      }
+      if (filters.priceMin !== null) {
+        params.price_min = filters.priceMin;
+      }
+      if (filters.priceMax !== null) {
+        params.price_max = filters.priceMax;
+      }
+      if (filters.bestFor.length > 0) {
+        params.best_for = filters.bestFor;
+      }
+
+      // Apply sorting
+      if (sort) {
+        if (sort === 'price-low-to-high') {
+          params.ordering = 'price';
+        } else if (sort === 'price-high-to-low') {
+          params.ordering = '-price';
+        } else if (sort === 'newest') {
+          params.ordering = '-created_at';
+        }
+      } else {
+        // Default sorting
+        params.ordering = '-created_at';
+      }
+
+      const response = await getProducts(params);
+      if (response.status === 200) {
+        setProducts(response.data.results);
+      } else {
+        toast.error(response.data.error || 'Failed to fetch products.');
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'An error occurred while fetching products.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Handle filter changes from Sidebar
-  const handleFilterChange = useCallback((newFilters: Record<string, any>) => {
-    setFilters(newFilters);
+  const handleFilterChange = (filters: Filters) => {
+    fetchProducts(filters, sortBy);
+  };
+
+  // Handle sort changes
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedSort = e.target.value;
+    setSortBy(selectedSort);
+    // Assuming you have a state to hold current filters
+    // For simplicity, refetch products with new sort and existing filters
+    // You might want to maintain current filter state separately
+    // Here, we'll assume filters are empty if not maintained
+    // Ideally, lift filter state up to a higher component
+    fetchProducts(
+      {
+        categories: [],
+        sizes: [],
+        color: '',
+        priceMin: null,
+        priceMax: null,
+        bestFor: [],
+      },
+      selectedSort
+    );
+  };
+
+  // Initial fetch on component mount
+  useEffect(() => {
+    fetchProducts(
+      {
+        categories: [],
+        sizes: [],
+        color: '',
+        priceMin: null,
+        priceMax: null,
+        bestFor: [],
+      },
+      sortBy
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -49,7 +148,7 @@ const Latest = () => {
       {/* Header */}
       <div className="flex items-center justify-between p-4 text-white bg-black">
         <div>
-          <h1 className="text-xl md:text-2xl">Enso By You ({products.length})</h1>
+          <h1 className="text-xl md:text-2xl">Enso By You (79)</h1>
         </div>
         <div className="flex items-center space-x-4">
           {/* Toggle Filters Button for Small Devices */}
@@ -66,16 +165,8 @@ const Latest = () => {
             <select
               className="px-2 py-2 text-black bg-gray-400 rounded appearance-none focus:outline-none"
               aria-label="Sort by"
-              onChange={(e) => {
-                const value = e.target.value;
-                if (value === 'price-low-to-high') {
-                  setFilters((prev) => ({ ...prev, ordering: 'price' }));
-                } else if (value === 'price-high-to-low') {
-                  setFilters((prev) => ({ ...prev, ordering: '-price' }));
-                } else if (value === 'newest') {
-                  setFilters((prev) => ({ ...prev, ordering: '-created_at' }));
-                }
-              }}
+              value={sortBy}
+              onChange={handleSortChange}
             >
               <option value="">Sort By</option>
               <option value="price-low-to-high">Price: Low to High</option>
@@ -100,13 +191,14 @@ const Latest = () => {
 
       {/* Main Content */}
       <div className="container mx-auto mt-4 px-4 md:ml-[20%] md:w-4/5">
+        {/* Loading State */}
         {loading ? (
-          <p className="text-center text-white">Loading products...</p>
+          <p className="text-center text-gray-700">Loading products...</p>
         ) : products.length === 0 ? (
-          <p className="text-center text-white">No products found.</p>
+          <p className="text-center text-gray-700">No products found.</p>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product: Product) => (
+            {products.map((product) => (
               <div
                 key={product.id}
                 className="overflow-hidden font-sans transition-transform transform bg-gray-300 rounded-lg shadow-lg hover:-translate-y-2"
@@ -124,7 +216,7 @@ const Latest = () => {
                   <h3 className="text-[#D87D4A]">Customize</h3>
                   <h3 className="text-gray-800">{product.title}</h3>
                   <p className="mt-2 text-sm text-gray-700">
-                    {product.product_sizes.map((size) => size.name).join(', ')} &middot; {product.color}
+                    {product.product_sizes.length} Sizes &middot; {product.images.length} Images
                   </p>
                   <div className="mt-4 text-lg font-semibold text-gray-700">
                     ${parseFloat(product.price).toFixed(2)}
