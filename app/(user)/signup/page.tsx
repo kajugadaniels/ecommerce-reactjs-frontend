@@ -78,14 +78,14 @@ const Register = () => {
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center bg-cover bg-center p-4"
+      className="flex items-center justify-center min-h-screen p-4 bg-center bg-cover"
       style={{
         backgroundImage: "url('/products/aut_background.png')",
       }}
     >
-      <div className="w-full max-w-md rounded-lg bg-black bg-opacity-70 p-6 shadow-lg sm:p-8 md:p-12">
+      <div className="w-full max-w-md p-6 bg-black rounded-lg shadow-lg bg-opacity-70 sm:p-8 md:p-12">
         {/* Title */}
-        <h2 className="mb-2 text-center text-2xl font-bold text-white sm:text-3xl">
+        <h2 className="mb-2 text-2xl font-bold text-center text-white sm:text-3xl">
           Sign Up
         </h2>
         <p className="mb-6 text-center text-gray-400">
@@ -99,13 +99,9 @@ const Register = () => {
             type="text"
             name="firstName"
             placeholder="First Name"
-<<<<<<< HEAD
             value={formData.firstName}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-=======
-            className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
->>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Last Name */}
@@ -113,20 +109,9 @@ const Register = () => {
             type="text"
             name="lastName"
             placeholder="Last Name"
-<<<<<<< HEAD
             value={formData.lastName}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-=======
-            className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-          />
-
-          {/* Username */}
-          <input
-            type="text"
-            placeholder="Username"
-            className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
->>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Email */}
@@ -134,29 +119,19 @@ const Register = () => {
             type="email"
             name="email"
             placeholder="Email or mobile number"
-<<<<<<< HEAD
             value={formData.email}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-=======
-            className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
->>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Phone Number */}
           <input
-<<<<<<< HEAD
             type="text"
             name="phoneNumber"
             placeholder="Phone Number"
             value={formData.phoneNumber}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-=======
-            type="email"
-            placeholder="Confirm Email or mobile number"
-            className="mb-4 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
->>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Password */}
@@ -164,7 +139,6 @@ const Register = () => {
             type="password"
             name="password"
             placeholder="Password"
-<<<<<<< HEAD
             value={formData.password}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
@@ -178,22 +152,15 @@ const Register = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-6 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
-=======
-            className="mb-6 w-full rounded border border-gray-600 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
->>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           />
 
           {/* Sign Up Button */}
           <button
             type="submit"
-<<<<<<< HEAD
             disabled={isSubmitting}
             className={`w-full py-2 font-semibold text-white transition duration-300 bg-[#D87D4A] rounded hover:bg-[#c36a39] ${
               isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
             }`}
-=======
-            className="w-full rounded bg-[#D87D4A] py-2 font-semibold text-white transition duration-300 hover:bg-[#D87D4A]"
->>>>>>> cad270464973bb0ea45f93cba771a9dbd36e1a3d
           >
             {isSubmitting ? 'Signing Up...' : 'SIGN UP'}
           </button>
