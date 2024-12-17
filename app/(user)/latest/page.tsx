@@ -21,6 +21,14 @@ const Latest = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>(''); // e.g., 'price-low-to-high', 'price-high-to-low', 'newest'
+  const [currentFilters, setCurrentFilters] = useState<Filters>({
+    categories: [],
+    sizes: [],
+    color: '',
+    priceMin: null,
+    priceMax: null,
+    bestFor: [],
+  });
 
   // Prevent body scroll when sidebar is open on small devices
   useEffect(() => {
@@ -89,7 +97,7 @@ const Latest = () => {
 
       const response = await getProducts(params);
       if (response.status === 200) {
-        setProducts(response.data.results);
+        setProducts(response.data);
       } else {
         toast.error(response.data.error || 'Failed to fetch products.');
       }
@@ -102,6 +110,7 @@ const Latest = () => {
 
   // Handle filter changes from Sidebar
   const handleFilterChange = (filters: Filters) => {
+    setCurrentFilters(filters);
     fetchProducts(filters, sortBy);
   };
 
@@ -109,36 +118,12 @@ const Latest = () => {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSort = e.target.value;
     setSortBy(selectedSort);
-    // Refetch products with new sort and existing filters
-    // You might want to maintain current filter state separately
-    // Here, we'll assume filters are empty if not maintained
-    // Ideally, lift filter state up to a higher component or use Context
-    fetchProducts(
-      {
-        categories: [],
-        sizes: [],
-        color: '',
-        priceMin: null,
-        priceMax: null,
-        bestFor: [],
-      },
-      selectedSort
-    );
+    fetchProducts(currentFilters, selectedSort);
   };
 
   // Initial fetch on component mount
   useEffect(() => {
-    fetchProducts(
-      {
-        categories: [],
-        sizes: [],
-        color: '',
-        priceMin: null,
-        priceMax: null,
-        bestFor: [],
-      },
-      sortBy
-    );
+    fetchProducts(currentFilters, sortBy);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -186,11 +171,7 @@ const Latest = () => {
       </div>
 
       {/* Sidebar */}
-      <Sidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        onFilterChange={handleFilterChange}
-      />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onFilterChange={handleFilterChange} />
 
       {/* Main Content */}
       <div className="container mx-auto mt-4 px-4 md:ml-[20%] md:w-4/5">
