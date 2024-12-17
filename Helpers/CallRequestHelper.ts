@@ -3,7 +3,14 @@ import apiCaller from './axiosHelper';
 // Register User
 export const registerUser = async (data: any) => {
   try {
-    const response = await apiCaller.post('/auth/register', data);
+    const { firstName, lastName, email, phoneNumber, password } = data;
+    const payload = {
+      name: `${firstName} ${lastName}`,
+      email: email,
+      phone_number: phoneNumber,
+      password: password,
+    };
+    const response = await apiCaller.post('/auth/register/', payload);
     return response;
   } catch (e: any) {
     console.error('Register User Error:', e.response || e.message);
@@ -14,10 +21,30 @@ export const registerUser = async (data: any) => {
 // Login User
 export const loginUser = async (data: any) => {
   try {
-    const response = await apiCaller.post('/auth/login', data);
+    const { identifier, password } = data;
+    const payload = {
+      identifier: identifier,
+      password: password,
+    };
+    const response = await apiCaller.post('/auth/login/', payload);
     return response;
   } catch (e: any) {
     console.error('Login User Error:', e.response || e.message);
+    return e.response;
+  }
+};
+
+// Logout User
+export const logoutUser = async (token: string) => {
+  try {
+    const response = await apiCaller.post('/auth/logout/', null, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    return response;
+  } catch (e: any) {
+    console.error('Logout User Error:', e.response || e.message);
     return e.response;
   }
 };
