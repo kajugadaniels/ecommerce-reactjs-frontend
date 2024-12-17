@@ -1,10 +1,8 @@
-// client/app/(user)/latest/[slug]/page.tsx
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { getProductBySlug, getProducts } from '@/Helpers/CallRequestHelper';
+import { getProduct, getProducts } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
 import Link from 'next/link';
 import { FaAngleDoubleDown } from 'react-icons/fa';
@@ -25,7 +23,7 @@ const ProductDetailPage = () => {
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const response = await getProductBySlug(slug);
+        const response = await getProduct(slug);
         if (response.status === 200) {
           setProduct(response.data);
           setMainImage(response.data.image); // Set main image to primary image
@@ -117,6 +115,7 @@ const ProductDetailPage = () => {
                 className={`border ${
                   mainImage === img.image ? 'border-indigo-600' : 'border-transparent'
                 } rounded-lg overflow-hidden focus:outline-none`}
+                aria-label={`View image`}
               >
                 <img
                   src={img.image}
@@ -131,6 +130,7 @@ const ProductDetailPage = () => {
               className={`border ${
                 mainImage === product.image ? 'border-indigo-600' : 'border-transparent'
               } rounded-lg overflow-hidden focus:outline-none`}
+              aria-label="View main image"
             >
               <img
                 src={product.image}
@@ -169,7 +169,7 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Customize Button */}
-            <Link href='/customize'>
+            <Link href={`/customize/${product.slug}`}>
               <button className="flex items-center justify-center w-full px-4 py-4 font-semibold text-white transition rounded-full bg-[#D87D4A]">
                 Customize
               </button>

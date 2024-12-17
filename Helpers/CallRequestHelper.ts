@@ -120,7 +120,7 @@ export const getLatestProducts = async (filters: Record<string, any>) => {
   }
 };
 
-export const getProductBySlug = async (slug: string) => {
+export const getProduct = async (slug: string) => {
   try {
     const response = await apiCaller.get(`/product/${slug}/`);
     return response;
