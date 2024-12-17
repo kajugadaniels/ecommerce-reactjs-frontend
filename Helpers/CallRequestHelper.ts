@@ -63,3 +63,13 @@ export const getHighPricedProducts = async () => {
     return e.response;
   }
 };
+
+export const getAllProducts = async () => {
+  try {
+    const response = await apiCaller.get('/api/products/');
+    return response;
+  } catch (e: any) {
+    console.error('Fetch All Products Error:', e.response || e.message);
+    return e.response;
+  }
+};
