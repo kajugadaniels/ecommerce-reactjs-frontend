@@ -1,3 +1,5 @@
+// client/app/(user)/latest/[slug]/page.tsx
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -123,6 +125,19 @@ const ProductDetailPage = () => {
                 />
               </button>
             ))}
+            {/* Main Image as Thumbnail */}
+            <button
+              onClick={() => handleThumbnailClick(product.image)}
+              className={`border ${
+                mainImage === product.image ? 'border-indigo-600' : 'border-transparent'
+              } rounded-lg overflow-hidden focus:outline-none`}
+            >
+              <img
+                src={product.image}
+                alt="Main Thumbnail"
+                className="object-cover w-20 h-20"
+              />
+            </button>
           </div>
         </div>
 
