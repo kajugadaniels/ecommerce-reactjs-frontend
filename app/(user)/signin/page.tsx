@@ -11,7 +11,7 @@ const Login = () => {
   const { setUserData, setToken } = useUserContext();
 
   const [formData, setFormData] = useState({
-    login: '',
+    identifier: '',
     password: '',
     rememberMe: false,
   });
@@ -30,8 +30,8 @@ const Login = () => {
     e.preventDefault();
 
     // Frontend validation
-    const { login, password } = formData;
-    if (!login || !password) {
+    const { identifier, password } = formData;
+    if (!identifier || !password) {
       toast.error('Please fill in all fields.');
       return;
     }
@@ -40,7 +40,7 @@ const Login = () => {
 
     try {
       const data = {
-        login,
+        identifier,
         password,
       };
 
@@ -55,20 +55,20 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
         // Redirect to protected route
-        router.push('/users/allusers');
+        router.push('/dashboard');
       } else {
         // Display backend validation errors if any
         if (response.data.errors) {
-          response.data.errors.forEach((err: any) => {
-            toast.error(err.msg);
+          Object.values(response.data.errors).forEach((err: any) => {
+            toast.error(err);
           });
         } else {
-          toast.error(response.data.message || 'Login failed.');
+          toast.error(response.data.error || 'Login failed.');
         }
       }
     } catch (error: any) {
       // Removed console.error for cleaner logs
-      toast.error(error.response?.data?.message || 'An error occurred.');
+      toast.error(error.response?.data?.error || 'An error occurred.');
     } finally {
       setIsSubmitting(false);
     }
@@ -92,12 +92,12 @@ const Login = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
-          {/* Email */}
+          {/* Identifier */}
           <input
-            type="email"
-            name="login"
+            type="text"
+            name="identifier"
             placeholder="Email or mobile number"
-            value={formData.login}
+            value={formData.identifier}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A] placeholder-gray-500"
           />
