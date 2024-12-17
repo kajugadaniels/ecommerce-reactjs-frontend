@@ -1,5 +1,5 @@
+// client/components/Sidebar.tsx
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { getCategories, getSizes } from '@/Helpers/CallRequestHelper';
 import { Category } from '@/types/Category';
 import { Size } from '@/types/Size';
@@ -17,7 +17,7 @@ interface Filters {
   color: string;
   priceMin: number | null;
   priceMax: number | null;
-  bestFor: string[];
+  productType: string[]; // Updated to handle multiple product types
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) => {
@@ -25,10 +25,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
   const [openSections, setOpenSections] = useState<{
     [key: string]: boolean;
   }>({
-    Gender: false,
+    'Product Type': false,
     Color: false,
     'Shop by Price': false,
-    'Best For': false,
+    Sizes: false,
   });
 
   // State to hold categories and sizes
@@ -38,11 +38,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
   // State to hold filter selections
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedGender, setSelectedGender] = useState<string[]>([]);
+  const [selectedProductTypes, setSelectedProductTypes] = useState<string[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
-  const [selectedBestFor, setSelectedBestFor] = useState<string[]>([]);
 
   useEffect(() => {
     // Fetch categories
@@ -50,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       try {
         const response = await getCategories();
         if (response.status === 200) {
-          setCategories(response.data); // Corrected: Use response.data directly
+          setCategories(response.data); // Correctly set categories
         } else {
           toast.error(response.data.error || 'Failed to fetch categories.');
         }
@@ -64,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       try {
         const response = await getSizes();
         if (response.status === 200) {
-          setSizes(response.data); // Corrected: Use response.data directly
+          setSizes(response.data); // Correctly set sizes
         } else {
           toast.error(response.data.error || 'Failed to fetch sizes.');
         }
@@ -84,29 +83,30 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
     }));
   };
 
-  // Handle checkbox changes
+  // Handle checkbox changes for categories
   const handleCategoryChange = (slug: string) => {
     setSelectedCategories((prev) =>
       prev.includes(slug) ? prev.filter((item) => item !== slug) : [...prev, slug]
     );
   };
 
+  // Handle checkbox changes for sizes
   const handleSizeChange = (slug: string) => {
     setSelectedSizes((prev) =>
       prev.includes(slug) ? prev.filter((item) => item !== slug) : [...prev, slug]
     );
   };
 
-  const handleGenderChange = (gender: string) => {
-    setSelectedGender((prev) =>
-      prev.includes(gender) ? prev.filter((item) => item !== gender) : [...prev, gender]
+  // Handle checkbox changes for product types
+  const handleProductTypeChange = (type: string) => {
+    setSelectedProductTypes((prev) =>
+      prev.includes(type) ? prev.filter((item) => item !== type) : [...prev, type]
     );
   };
 
-  const handleBestForChange = (option: string) => {
-    setSelectedBestFor((prev) =>
-      prev.includes(option) ? prev.filter((item) => item !== option) : [...prev, option]
-    );
+  // Handle color change
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
   };
 
   // Handle filter submission
@@ -117,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       color: selectedColor,
       priceMin: priceMin,
       priceMax: priceMax,
-      bestFor: selectedBestFor,
+      productType: selectedProductTypes,
     };
     onFilterChange(filters);
     onClose();
@@ -127,18 +127,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
   const resetFilters = () => {
     setSelectedCategories([]);
     setSelectedSizes([]);
-    setSelectedGender([]);
+    setSelectedProductTypes([]);
     setSelectedColor('');
     setPriceMin(null);
     setPriceMax(null);
-    setSelectedBestFor([]);
     onFilterChange({
       categories: [],
       sizes: [],
       color: '',
       priceMin: null,
       priceMax: null,
-      bestFor: [],
+      productType: [],
     });
     onClose();
   };
@@ -216,132 +215,198 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
               Filters
             </h3>
             <ul className="mt-4 space-y-4">
-              {['Gender', 'Color', 'Shop by Price', 'Best For'].map((filter) => (
-                <li key={filter}>
-                  <button
-                    className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
-                    onClick={() => toggleSection(filter)}
-                    aria-expanded={openSections[filter]}
+              {/* Product Type Section */}
+              <li>
+                <button
+                  className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
+                  onClick={() => toggleSection('Product Type')}
+                  aria-expanded={openSections['Product Type']}
+                >
+                  <span className="text-sm font-medium">Product Type</span>
+                  <svg
+                    className={`h-4 w-4 transition-transform ${
+                      openSections['Product Type'] ? 'rotate-180 transform' : ''
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <span className="text-sm font-medium">{filter}</span>
-                    <svg
-                      className={`h-4 w-4 transition-transform ${
-                        openSections[filter] ? 'rotate-180 transform' : ''
-                      }`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  {/* Collapsible Content */}
-                  {openSections[filter] && (
-                    <div className="pl-4 mt-2">
-                      {filter === 'Gender' && (
-                        <div className="space-y-2">
-                          {['Male', 'Female', 'Unisex'].map((gender) => (
-                            <label
-                              key={gender}
-                              className="flex items-center space-x-2"
-                            >
-                              <input
-                                type="checkbox"
-                                className="w-4 h-4 text-indigo-600 form-checkbox"
-                                checked={selectedGender.includes(gender)}
-                                onChange={() => handleGenderChange(gender)}
-                              />
-                              <span className="text-sm">{gender}</span>
-                            </label>
-                          ))}
-                        </div>
-                      )}
-                      {filter === 'Color' && (
-                        <div className="space-y-2">
-                          {['Red', 'Blue', 'Green', 'Black', 'White'].map(
-                            (color) => (
-                              <label
-                                key={color}
-                                className="flex items-center space-x-2"
-                              >
-                                <input
-                                  type="checkbox"
-                                  className="w-4 h-4 text-indigo-600 form-checkbox"
-                                  checked={selectedColor === color}
-                                  onChange={() =>
-                                    setSelectedColor(
-                                      selectedColor === color ? '' : color
-                                    )
-                                  }
-                                />
-                                <span className="text-sm">{color}</span>
-                              </label>
-                            ),
-                          )}
-                        </div>
-                      )}
-                      {filter === 'Shop by Price' && (
-                        <div className="space-y-2">
-                          <label className="block text-sm">
-                            Min Price
-                            <input
-                              type="number"
-                              className="block w-full mt-1 border-gray-300 rounded shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              placeholder="$0"
-                              value={priceMin ?? ''}
-                              onChange={(e) =>
-                                setPriceMin(
-                                  e.target.value ? parseFloat(e.target.value) : null
-                                )
-                              }
-                            />
-                          </label>
-                          <label className="block text-sm">
-                            Max Price
-                            <input
-                              type="number"
-                              className="block w-full mt-1 border-gray-300 rounded shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              placeholder="$1000"
-                              value={priceMax ?? ''}
-                              onChange={(e) =>
-                                setPriceMax(
-                                  e.target.value ? parseFloat(e.target.value) : null
-                                )
-                              }
-                            />
-                          </label>
-                        </div>
-                      )}
-                      {filter === 'Best For' && (
-                        <div className="space-y-2">
-                          {['Casual', 'Formal', 'Sports', 'Party'].map(
-                            (option) => (
-                              <label
-                                key={option}
-                                className="flex items-center space-x-2"
-                              >
-                                <input
-                                  type="checkbox"
-                                  className="w-4 h-4 text-indigo-600 form-checkbox"
-                                  checked={selectedBestFor.includes(option)}
-                                  onChange={() => handleBestForChange(option)}
-                                />
-                                <span className="text-sm">{option}</span>
-                              </label>
-                            ),
-                          )}
-                        </div>
-                      )}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {/* Collapsible Content */}
+                {openSections['Product Type'] && (
+                  <div className="pl-4 mt-2">
+                    {['Male', 'Female', 'Both'].map((type) => (
+                      <label key={type} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 text-indigo-600 form-checkbox"
+                          checked={selectedProductTypes.includes(type)}
+                          onChange={() => handleProductTypeChange(type)}
+                        />
+                        <span className="text-sm">{type}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </li>
+
+              {/* Color Section */}
+              <li>
+                <button
+                  className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
+                  onClick={() => toggleSection('Color')}
+                  aria-expanded={openSections['Color']}
+                >
+                  <span className="text-sm font-medium">Color</span>
+                  <svg
+                    className={`h-4 w-4 transition-transform ${
+                      openSections['Color'] ? 'rotate-180 transform' : ''
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {/* Collapsible Content */}
+                {openSections['Color'] && (
+                  <div className="pl-4 mt-2">
+                    {['Red', 'Blue', 'Green', 'Black', 'White'].map((color) => (
+                      <label key={color} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 text-indigo-600 form-checkbox"
+                          checked={selectedColor === color}
+                          onChange={() =>
+                            handleColorChange(selectedColor === color ? '' : color)
+                          }
+                        />
+                        <span className="text-sm">{color}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </li>
+
+              {/* Shop by Price Section */}
+              <li>
+                <button
+                  className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
+                  onClick={() => toggleSection('Shop by Price')}
+                  aria-expanded={openSections['Shop by Price']}
+                >
+                  <span className="text-sm font-medium">Shop by Price</span>
+                  <svg
+                    className={`h-4 w-4 transition-transform ${
+                      openSections['Shop by Price'] ? 'rotate-180 transform' : ''
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {/* Collapsible Content */}
+                {openSections['Shop by Price'] && (
+                  <div className="pl-4 mt-2">
+                    <div className="space-y-2">
+                      <label className="block text-sm">
+                        Min Price
+                        <input
+                          type="number"
+                          className="block w-full mt-1 border-gray-300 rounded shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          placeholder="$0"
+                          value={priceMin ?? ''}
+                          onChange={(e) =>
+                            setPriceMin(e.target.value ? parseFloat(e.target.value) : null)
+                          }
+                        />
+                      </label>
+                      <label className="block text-sm">
+                        Max Price
+                        <input
+                          type="number"
+                          className="block w-full mt-1 border-gray-300 rounded shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          placeholder="$1000"
+                          value={priceMax ?? ''}
+                          onChange={(e) =>
+                            setPriceMax(e.target.value ? parseFloat(e.target.value) : null)
+                          }
+                        />
+                      </label>
                     </div>
-                  )}
-                </li>
-              ))}
+                  </div>
+                )}
+              </li>
+
+              {/* Sizes Section */}
+              <li>
+                <button
+                  className="flex items-center justify-between w-full px-3 py-2 text-left transition-colors rounded hover:bg-gray-700 focus:outline-none"
+                  onClick={() => toggleSection('Sizes')}
+                  aria-expanded={openSections['Sizes']}
+                >
+                  <span className="text-sm font-medium">Sizes</span>
+                  <svg
+                    className={`h-4 w-4 transition-transform ${
+                      openSections['Sizes'] ? 'rotate-180 transform' : ''
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {/* Collapsible Content */}
+                {openSections['Sizes'] && (
+                  <div className="pl-4 mt-2">
+                    {sizes.length > 0 ? (
+                      sizes.map((size) => (
+                        <label key={size.slug} className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            className="w-4 h-4 text-indigo-600 form-checkbox"
+                            checked={selectedSizes.includes(size.slug)}
+                            onChange={() => handleSizeChange(size.slug)}
+                          />
+                          <span className="text-sm">{size.name}</span>
+                        </label>
+                      ))
+                    ) : (
+                      <p className="text-sm text-gray-700">No sizes available.</p>
+                    )}
+                  </div>
+                )}
+              </li>
             </ul>
           </li>
         </ul>
