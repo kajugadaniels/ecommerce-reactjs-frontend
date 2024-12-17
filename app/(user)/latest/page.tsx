@@ -97,7 +97,7 @@ const Latest = () => {
 
       const response = await getProducts(params);
       if (response.status === 200) {
-        setProducts(response.data);
+        setProducts(response.data.results); // Corrected: Use response.data.results
       } else {
         toast.error(response.data.error || 'Failed to fetch products.');
       }
