@@ -1,3 +1,4 @@
+// Sidebar.tsx
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getCategories, getSizes } from '@/Helpers/CallRequestHelper';
@@ -50,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       try {
         const response = await getCategories();
         if (response.status === 200) {
-          setCategories(response.data);
+          setCategories(response.data); // Corrected: Use response.data directly
         } else {
           toast.error(response.data.error || 'Failed to fetch categories.');
         }
@@ -64,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
       try {
         const response = await getSizes();
         if (response.status === 200) {
-          setSizes(response.data);
+          setSizes(response.data); // Corrected: Use response.data directly
         } else {
           toast.error(response.data.error || 'Failed to fetch sizes.');
         }
