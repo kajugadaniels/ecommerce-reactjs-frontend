@@ -170,7 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onFilterChange }) =>
           </button>
         </div>
 
-        <ul>
+        <ul className='mt-32'>
           {/* Categories Section */}
           <li className="mb-6">
             <h3 className="pb-2 text-sm font-semibold tracking-wider uppercase border-b">
