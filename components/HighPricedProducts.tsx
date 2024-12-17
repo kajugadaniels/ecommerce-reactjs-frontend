@@ -14,7 +14,8 @@ const HighPricedProducts: React.FC = () => {
       try {
         const response = await getHighPricedProducts();
         if (response.status === 200) {
-          setProducts(response.data);
+          // Set products to response.data.results
+          setProducts(response.data.results);
         } else {
           toast.error(response.data.error || 'Failed to fetch high-priced products.');
         }
@@ -52,11 +53,11 @@ const HighPricedProducts: React.FC = () => {
               className="object-contain w-full h-full"
             />
           </div>
-          <div className="flex items-center justify-center px-4 py-2 sm:px-10">
+          <div className="flex flex-col items-center justify-center px-4 py-2 sm:px-10">
             <h3 className="text-lg font-extrabold text-center text-gray-800 sm:text-base">
               {product.title}
             </h3>
-            <p className="mt-2 text-sm text-gray-600">${product.price}</p>
+            <p className="mt-2 text-sm text-gray-600">${parseFloat(product.price).toFixed(2)}</p>
           </div>
         </div>
       ))}
