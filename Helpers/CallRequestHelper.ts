@@ -119,3 +119,13 @@ export const getLatestProducts = async (filters: Record<string, any>) => {
     return e.response;
   }
 };
+
+export const getProductBySlug = async (slug: string) => {
+  try {
+    const response = await apiCaller.get(`/product/${slug}/`);
+    return response;
+  } catch (e: any) {
+    console.error('Fetch Product Error:', e.response || e.message);
+    return e.response;
+  }
+};

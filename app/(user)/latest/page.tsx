@@ -187,7 +187,7 @@ const Latest = () => {
                 key={product.id}
                 className="overflow-hidden font-sans transition-transform transform bg-gray-300 rounded-lg shadow-lg hover:-translate-y-2"
               >
-                <Link href={`/latest/detail/${product.slug}`}>
+                <Link href={`/latest/${product.slug}`}>
                   <div className="flex items-center justify-center h-64 p-4">
                     <img
                       src={product.image}
