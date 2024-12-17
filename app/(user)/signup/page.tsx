@@ -36,7 +36,7 @@ const Register = () => {
       return;
     }
 
-    if (password !== confirmPassword) { // Corrected comparison
+    if (password !== confirmPassword) {
       toast.error('Password and Confirm Password do not match.');
       return;
     }
@@ -50,7 +50,6 @@ const Register = () => {
         email,
         phoneNumber,
         password,
-        confirmPassword,
       };
 
       const response = await registerUser(data);
@@ -61,16 +60,16 @@ const Register = () => {
       } else {
         // Display backend validation errors if any
         if (response.data.errors) {
-          response.data.errors.forEach((err: any) => {
-            toast.error(err.msg);
+          Object.values(response.data.errors).forEach((err: any) => {
+            toast.error(err);
           });
         } else {
-          toast.error(response.data.message || 'Registration failed.');
+          toast.error(response.data.error || 'Registration failed.');
         }
       }
     } catch (error: any) {
       // Removed console.error for cleaner logs
-      toast.error(error.response?.data?.message || 'An error occurred.');
+      toast.error(error.response?.data?.error || 'An error occurred.');
     } finally {
       setIsSubmitting(false);
     }
@@ -118,7 +117,7 @@ const Register = () => {
           <input
             type="email"
             name="email"
-            placeholder="Email or mobile number"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
             className="w-full px-4 py-2 mb-4 text-white placeholder-gray-500 bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#D87D4A]"
