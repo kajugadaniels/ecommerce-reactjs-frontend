@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// Get the base URL from environment variables
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://127.0.0.1:8000/api/';
 
 // Create an Axios instance
 const apiCaller = axios.create({
@@ -12,7 +11,7 @@ const apiCaller = axios.create({
   withCredentials: false,
 });
 
-// Add a request interceptor to include the token
+// Add a request interceptor to include the token if available
 apiCaller.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {

@@ -64,13 +64,22 @@ export const getHighPricedProducts = async () => {
   }
 };
 
-// Fetch All Products
 export const getAllProducts = async () => {
   try {
     const response = await apiCaller.get('/products/');
     return response;
   } catch (e: any) {
     console.error('Fetch All Products Error:', e.response || e.message);
+    return e.response;
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    const response = await apiCaller.get('/categories/');
+    return response;
+  } catch (e: any) {
+    console.error('Fetch Categories Error:', e.response || e.message);
     return e.response;
   }
 };
