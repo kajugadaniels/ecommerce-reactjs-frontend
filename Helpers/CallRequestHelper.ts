@@ -93,3 +93,19 @@ export const getSizes = async () => {
     return e.response;
   }
 };
+
+export const getLatestProducts = async (filters: Record<string, any>) => {
+  try {
+    const response = await apiCaller.get('/products/', {
+      params: {
+        ordering: '-created_at',
+        limit: 20,
+        ...filters,
+      },
+    });
+    return response;
+  } catch (e: any) {
+    console.error('Fetch Latest Products Error:', e.response || e.message);
+    return e.response;
+  }
+};
