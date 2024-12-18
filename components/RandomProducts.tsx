@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllProducts } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 const RandomProducts: React.FC = () => {
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
@@ -47,19 +48,21 @@ const RandomProducts: React.FC = () => {
             // Handle product click, e.g., navigate to product details
           }}
         >
-          <div className="mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8">
-            <img
-              src={product.image}
-              className="object-cover w-full h-full"
-              alt={product.title}
-            />
-          </div>
-          <div className="flex flex-col items-center justify-center px-4 py-2 sm:px-10">
-            <h3 className="text-lg font-extrabold text-center text-gray-800 sm:text-base">
-              {product.title}
-            </h3>
-            <p className="mt-2 text-sm text-gray-600">${parseFloat(product.price).toFixed(2)}</p>
-          </div>
+          <Link href={`/customize/${product.slug}`}>
+            <div className="mx-auto mb-4 overflow-hidden aspect-w-16 aspect-h-8">
+              <img
+                src={product.image}
+                className="object-cover w-full h-full"
+                alt={product.title}
+              />
+            </div>
+            <div className="flex flex-col items-center justify-center px-4 py-2 sm:px-10">
+              <h3 className="text-lg font-extrabold text-center text-gray-800 sm:text-base">
+                {product.title}
+              </h3>
+              <p className="mt-2 text-sm text-gray-600">${parseFloat(product.price).toFixed(2)}</p>
+            </div>
+          </Link>
         </div>
       ))}
     </div>

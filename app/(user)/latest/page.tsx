@@ -197,7 +197,9 @@ const Latest = () => {
                   </div>
                 </Link>
                 <div className="p-6 bg-white">
-                  <h3 className="text-[#D87D4A]">Customize</h3>
+                  <Link href={`/customize/${product.slug}`}>
+                    <h3 className="text-[#D87D4A]">Customize</h3>
+                  </Link>
                   <h3 className="text-gray-800">{product.title}</h3>
                   <p className="mt-2 text-sm text-gray-700">
                     {product.product_sizes.length} Sizes &middot; {product.images.length} Images
