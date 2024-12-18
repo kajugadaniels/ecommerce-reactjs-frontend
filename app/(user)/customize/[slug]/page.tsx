@@ -3,7 +3,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation'; // Imported useRouter
 import { getProduct, getProducts } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ import { getUser } from '@/utils/user';
 
 const Customize = () => {
     const params = useParams();
+    const router = useRouter(); // Initialized router
     const { slug } = params as { slug: string };
 
     const [product, setProduct] = useState<Product | null>(null);
@@ -24,6 +25,8 @@ const Customize = () => {
     const [availableColors, setAvailableColors] = useState<string[]>([]);
     const [quantity, setQuantity] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const user = getUser(); // Retrieved user information
 
     // Fetch product details based on slug
     useEffect(() => {
@@ -64,8 +67,8 @@ const Customize = () => {
 
     // Handle Add to Cart
     const handleAddToCart = () => {
-        const user = getUser();
         if (!user) {
+            // This check is redundant now but kept for safety
             toast.error('Please log in to add items to your cart.');
             return;
         }
@@ -286,12 +289,21 @@ const Customize = () => {
 
                     {/* Action Buttons */}
                     <div className="space-y-4">
-                        <button
-                            onClick={handleAddToCart}
-                            className="w-full rounded-full bg-[#D87D4A] py-4 font-bold text-white hover:bg-[#e08a55]"
-                        >
-                            Add to Bag
-                        </button>
+                        {user ? (
+                            <button
+                                onClick={handleAddToCart}
+                                className="w-full rounded-full bg-[#D87D4A] py-4 font-bold text-white hover:bg-[#e08a55]"
+                            >
+                                Add to Bag
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => router.push('/signin')}
+                                className="w-full rounded-full bg-[#D87D4A] py-4 font-bold text-white hover:bg-[#e08a55]"
+                            >
+                                Login first to add to cart
+                            </button>
+                        )}
                         <button className="w-full py-4 text-gray-400 border border-gray-700 rounded-full hover:bg-gray-800">
                             Favorite
                         </button>
