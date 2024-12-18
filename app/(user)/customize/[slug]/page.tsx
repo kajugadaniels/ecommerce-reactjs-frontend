@@ -1,3 +1,5 @@
+// client/app/(user)/customize/[slug]/page.tsx
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -33,19 +35,20 @@ const Customize = () => {
                     setProduct(response.data);
                     setMainImage(response.data.image);
                     
-                    // Extract available colors from images
-                    const colorsSet = new Set<string>();
-                    response.data.images.forEach((img) => {
-                        if (img.color) {
-                            colorsSet.add(img.color);
-                        }
-                    });
-                    setAvailableColors(Array.from(colorsSet));
+                    // Directly use the color from product
+                    if (response.data.color) {
+                        setAvailableColors([response.data.color]);
+                    } else {
+                        setAvailableColors([]);
+                    }
+
+                    console.log('Available Colors:', [response.data.color]);
                 } else {
                     toast.error(response.data.error || 'Failed to fetch product details.');
                 }
             } catch (error: any) {
                 toast.error(error.response?.data?.error || 'An error occurred while fetching product details.');
+                console.error('Fetch Product Error:', error.response || error.message);
             } finally {
                 setLoading(false);
             }
@@ -100,6 +103,7 @@ const Customize = () => {
                 toast.success('Product added to cart!');
             } catch (error) {
                 toast.error('Failed to add product to cart.');
+                console.error('Add to Cart Error:', error);
             }
         }
     };
@@ -167,7 +171,7 @@ const Customize = () => {
                     <div className="relative w-full mt-4 lg:ml-4 lg:mt-0 lg:w-4/5">
                         <img
                             src={mainImage}
-                            alt="Kimono Main"
+                            alt="Product Main"
                             className="object-cover w-full h-auto transition-transform duration-300 rounded-lg"
                             loading="lazy"
                         />
@@ -246,20 +250,24 @@ const Customize = () => {
                     <div>
                         <h2 className="mb-4 text-lg font-semibold">Select Color</h2>
                         <div className="flex flex-wrap gap-3">
-                            {availableColors.map((color, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setSelectedColor(color)}
-                                    className={`rounded border border-gray-700 px-4 py-2 ${
-                                        selectedColor === color
-                                            ? 'bg-white font-bold text-black'
-                                            : 'hover:bg-gray-800'
-                                    }`}
-                                    aria-pressed={selectedColor === color}
-                                >
-                                    {color}
-                                </button>
-                            ))}
+                            {availableColors.length > 0 ? (
+                                availableColors.map((color, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setSelectedColor(color)}
+                                        className={`rounded border border-gray-700 px-4 py-2 ${
+                                            selectedColor === color
+                                                ? 'bg-white font-bold text-black'
+                                                : 'hover:bg-gray-800'
+                                        }`}
+                                        aria-pressed={selectedColor === color}
+                                    >
+                                        {color}
+                                    </button>
+                                ))
+                            ) : (
+                                <p className="text-gray-500">No colors available.</p>
+                            )}
                         </div>
                     </div>
 
@@ -345,87 +353,88 @@ const Customize = () => {
     )
 };
 
-// RelatedProducts Component
-interface RelatedProductsProps {
-    categorySlug: string;
-    currentProductId: number;
-}
+    // RelatedProducts Component
+    interface RelatedProductsProps {
+        categorySlug: string;
+        currentProductId: number;
+    }
 
-const RelatedProducts: React.FC<RelatedProductsProps> = ({ categorySlug, currentProductId }) => {
-    const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+    const RelatedProducts: React.FC<RelatedProductsProps> = ({ categorySlug, currentProductId }) => {
+        const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+        const [loading, setLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        const fetchRelatedProducts = async () => {
-            setLoading(true);
-            try {
-                const response = await getProducts({
-                    category: categorySlug,
-                    ordering: '-created_at',
-                    limit: 4, // Adjust the limit as needed
-                });
-                if (response.status === 200) {
-                    // Exclude the current product from related products
-                    const related = response.data.results.filter(
-                        (item: Product) => item.id !== currentProductId
-                    ).slice(0, 3); // Limit to 3 related products
-                    setRelatedProducts(related);
-                } else {
-                    toast.error(response.data.error || 'Failed to fetch related products.');
+        useEffect(() => {
+            const fetchRelatedProducts = async () => {
+                setLoading(true);
+                try {
+                    const response = await getProducts({
+                        category: categorySlug,
+                        ordering: '-created_at',
+                        limit: 4, // Adjust the limit as needed
+                    });
+                    if (response.status === 200) {
+                        // Exclude the current product from related products
+                        const related = response.data.results.filter(
+                            (item: Product) => item.id !== currentProductId
+                        ).slice(0, 3); // Limit to 3 related products
+                        setRelatedProducts(related);
+                    } else {
+                        toast.error(response.data.error || 'Failed to fetch related products.');
+                    }
+                } catch (error: any) {
+                    toast.error(error.response?.data?.error || 'An error occurred while fetching related products.');
+                    console.error('Fetch Related Products Error:', error.response || error.message);
+                } finally {
+                    setLoading(false);
                 }
-            } catch (error: any) {
-                toast.error(error.response?.data?.error || 'An error occurred while fetching related products.');
-            } finally {
-                setLoading(false);
-            }
-        };
+            };
 
-        fetchRelatedProducts();
-    }, [categorySlug, currentProductId]);
+            fetchRelatedProducts();
+        }, [categorySlug, currentProductId]);
 
-    if (loading) {
-        return <p className="text-center text-gray-700">Loading related products...</p>;
-    }
+        if (loading) {
+            return <p className="text-center text-gray-700">Loading related products...</p>;
+        }
 
-    if (relatedProducts.length === 0) {
-        return <p className="text-center text-gray-700">No related products found.</p>;
-    }
+        if (relatedProducts.length === 0) {
+            return <p className="text-center text-gray-700">No related products found.</p>;
+        }
 
-    return (
-        <>
-            {relatedProducts.map((relatedProduct) => (
-                <div
-                    key={relatedProduct.id}
-                    className="overflow-hidden font-sans bg-gray-300 rounded-lg shadow-md"
-                >
-                    <div className="flex min-h-[256px] items-center justify-center">
-                        <img
-                            src={relatedProduct.image}
-                            alt={relatedProduct.title}
-                            className="object-contain w-full"
-                            loading="lazy"
-                        />
-                    </div>
-                    <div className="p-6 bg-white">
-                        <h3 className="text-[#D87D4A]">Customize</h3>
-                        <h3 className="text-gray-800">{relatedProduct.title}</h3>
-                        <p className="mt-2 text-sm text-gray-700">
-                            {relatedProduct.product_sizes.length} Sizes &middot; {relatedProduct.images.length} Images
-                        </p>
-                        <div className="mt-4 text-lg font-semibold text-gray-700">
-                            ${parseFloat(relatedProduct.price).toFixed(2)}
+        return (
+            <>
+                {relatedProducts.map((relatedProduct) => (
+                    <div
+                        key={relatedProduct.id}
+                        className="overflow-hidden font-sans bg-gray-300 rounded-lg shadow-md"
+                    >
+                        <div className="flex min-h-[256px] items-center justify-center">
+                            <img
+                                src={relatedProduct.image}
+                                alt={relatedProduct.title}
+                                className="object-contain w-full"
+                                loading="lazy"
+                            />
                         </div>
-                        {/* Customize Button */}
-                        <Link href={`/customize/${relatedProduct.slug}`}>
-                            <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
-                                Customize
-                            </button>
-                        </Link>
+                        <div className="p-6 bg-white">
+                            <h3 className="text-[#D87D4A]">Customize</h3>
+                            <h3 className="text-gray-800">{relatedProduct.title}</h3>
+                            <p className="mt-2 text-sm text-gray-700">
+                                {relatedProduct.product_sizes.length} Sizes &middot; {relatedProduct.images.length} Images
+                            </p>
+                            <div className="mt-4 text-lg font-semibold text-gray-700">
+                                ${parseFloat(relatedProduct.price).toFixed(2)}
+                            </div>
+                            {/* Customize Button */}
+                            <Link href={`/customize/${relatedProduct.slug}`}>
+                                <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
+                                    Customize
+                                </button>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            ))}
-        </>
-    );
-};
+                ))}
+            </>
+        );
+    };
 
-export default Customize;
+    export default Customize;
