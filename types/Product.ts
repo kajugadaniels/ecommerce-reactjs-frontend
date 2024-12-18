@@ -11,7 +11,7 @@ export interface Product {
     product_sizes: Size[];
     image: string;
     color: string;
-    product_type: 'Male' | 'Female' | 'Both';
+    product_type: string;
     description: string;
     created_at: string;
     updated_at: string;
