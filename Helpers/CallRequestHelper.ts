@@ -120,15 +120,12 @@ export const getLatestProducts = async (filters: Record<string, any>) => {
   }
 };
 
-// **Corrected getProduct Function**
 export const getProduct = async (slug: string) => {
   try {
-    const response = await apiCaller.get(`/products/${slug}/`); // Corrected endpoint
+    const response = await apiCaller.get(`/product/${slug}/`);
     return response;
   } catch (e: any) {
     console.error('Fetch Product Error:', e.response || e.message);
     return e.response;
   }
 };
-
-export default apiCaller;
