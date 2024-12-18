@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { getProduct } from '@/Helpers/CallRequestHelper';
+import { getProduct, getProducts } from '@/Helpers/CallRequestHelper';
 import { Product } from '@/types/Product';
 import Link from 'next/link';
 import { FaAngleDoubleDown } from 'react-icons/fa';
@@ -121,7 +121,7 @@ const Customize = () => {
     }
 
     return (
-        <div className="text-white bg-black">
+        <div className="bg-black text-white">
             <ToastContainer />
             {/* Main Customize Content */}
             <div className="flex flex-col gap-10 p-4 bg-black lg:flex-row lg:gap-52 lg:p-0">
@@ -136,12 +136,13 @@ const Customize = () => {
                                 className={`border ${
                                     mainImage === img.image ? 'border-indigo-600' : 'border-transparent'
                                 } rounded-lg overflow-hidden focus:outline-none`}
-                                aria-label={`View image`}
+                                aria-label={`View image ${img.id}`}
                             >
                                 <img
                                     src={img.image}
                                     alt={`Thumbnail ${img.id}`}
-                                    className="flex-shrink-0 object-cover w-16 h-16 border border-gray-700 rounded-md cursor-pointer hover:opacity-80"
+                                    className="h-16 w-16 flex-shrink-0 cursor-pointer rounded-md border border-gray-700 object-cover hover:opacity-80"
+                                    loading="lazy"
                                 />
                             </button>
                         ))}
@@ -156,7 +157,8 @@ const Customize = () => {
                             <img
                                 src={product.image}
                                 alt="Main Thumbnail"
-                                className="flex-shrink-0 object-cover w-16 h-16 border border-gray-700 rounded-md cursor-pointer hover:opacity-80"
+                                className="h-16 w-16 flex-shrink-0 cursor-pointer rounded-md border border-gray-700 object-cover hover:opacity-80"
+                                loading="lazy"
                             />
                         </button>
                     </div>
@@ -171,16 +173,22 @@ const Customize = () => {
                         />
 
                         {/* Badge */}
-                        <div className="absolute px-2 py-1 text-sm text-black bg-white rounded-md shadow-md left-2 top-2">
+                        <div className="absolute left-2 top-2 rounded-md bg-white px-2 py-1 text-sm text-black shadow-md">
                             Highly Rated
                         </div>
 
                         {/* Navigation Buttons */}
-                        <div className="absolute flex space-x-2 bottom-2 right-2">
-                            <button className="flex items-center justify-center w-8 h-8 text-white bg-gray-700 rounded-full hover:bg-gray-800" aria-label="Previous Image">
+                        <div className="absolute bottom-2 right-2 flex space-x-2">
+                            <button
+                                className="flex items-center justify-center w-8 h-8 text-white bg-gray-700 rounded-full hover:bg-gray-800"
+                                aria-label="Previous Image"
+                            >
                                 ←
                             </button>
-                            <button className="flex items-center justify-center w-8 h-8 text-white bg-gray-700 rounded-full hover:bg-gray-800" aria-label="Next Image">
+                            <button
+                                className="flex items-center justify-center w-8 h-8 text-white bg-gray-700 rounded-full hover:bg-gray-800"
+                                aria-label="Next Image"
+                            >
                                 →
                             </button>
                         </div>
@@ -205,7 +213,8 @@ const Customize = () => {
                                     <img
                                         src={img.image}
                                         alt={`Additional Thumbnail ${idx + 1}`}
-                                        className="object-cover w-16 h-16 border border-gray-700 rounded-md cursor-pointer hover:opacity-80"
+                                        className="h-16 w-16 cursor-pointer rounded-md border border-gray-700 object-cover hover:opacity-80"
+                                        loading="lazy"
                                     />
                                 </button>
                             ))}
@@ -328,14 +337,12 @@ const Customize = () => {
             {/* Recommended Products */}
             <div className="container px-4 mx-auto mt-10">
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-                    {/* Repeated Product Blocks */}
-                    {product.category && product.id && (
-                        <RelatedProducts categorySlug={product.category.slug} currentProductId={product.id} />
-                    )}
+                    {/* Related Products Component */}
+                    <RelatedProducts categorySlug={product.category.slug} currentProductId={product.id} />
                 </div>
             </div>
         </div>
-    );
+    )
 };
 
 // RelatedProducts Component
@@ -352,13 +359,17 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ categorySlug, current
         const fetchRelatedProducts = async () => {
             setLoading(true);
             try {
-                const response = await getProduct(categorySlug);
+                const response = await getProducts({
+                    category: categorySlug,
+                    ordering: '-created_at',
+                    limit: 4, // Adjust the limit as needed
+                });
                 if (response.status === 200) {
-                    const allProducts: Product[] = response.data.results;
-                    const filtered = allProducts.filter(
+                    // Exclude the current product from related products
+                    const related = response.data.results.filter(
                         (item: Product) => item.id !== currentProductId
                     ).slice(0, 3); // Limit to 3 related products
-                    setRelatedProducts(filtered);
+                    setRelatedProducts(related);
                 } else {
                     toast.error(response.data.error || 'Failed to fetch related products.');
                 }
@@ -392,6 +403,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ categorySlug, current
                             src={relatedProduct.image}
                             alt={relatedProduct.title}
                             className="object-contain w-full"
+                            loading="lazy"
                         />
                     </div>
                     <div className="p-6 bg-white">
