@@ -1,5 +1,3 @@
-// client/app/(user)/unisex/page.tsx
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -12,24 +10,32 @@ import 'react-toastify/dist/ReactToastify.css';
 const Unisex = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
 
-  // Fetch Unisex Products on Component Mount
+  // Fetch "Both" Products
   useEffect(() => {
     const fetchUnisexProducts = async () => {
       setLoading(true);
       try {
-        const response = await getProducts({ product_type: 'Both' });
+        const response = await getProducts({
+          product_type: 'Both', // Filter by product_type
+          ordering: '-created_at', // Optional: Order by newest first
+          limit: 10, // Adjust the limit as needed
+        });
+
         if (response.status === 200) {
           setProducts(response.data.results);
         } else {
-          setError(response.data.error || 'Failed to fetch unisex products.');
-          toast.error(response.data.error || 'Failed to fetch unisex products.');
+          const errorMessage = response.data.error || 'Failed to fetch products.';
+          setError(errorMessage);
+          toast.error(errorMessage);
         }
-      } catch (err: any) {
-        setError(err.response?.data?.error || 'An error occurred while fetching products.');
-        toast.error(err.response?.data?.error || 'An error occurred while fetching products.');
-        console.error('Fetch Unisex Products Error:', err.response || err.message);
+      } catch (error: any) {
+        const errorMessage =
+          error.response?.data?.error || 'An error occurred while fetching products.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+        console.error('Fetch Products Error:', error.response || error.message);
       } finally {
         setLoading(false);
       }
@@ -41,7 +47,7 @@ const Unisex = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#121212] text-white">
-        <p className="text-gray-300">Loading unisex collections...</p>
+        <p className="text-gray-300">Loading Unisex Collections...</p>
       </div>
     );
   }
@@ -57,7 +63,6 @@ const Unisex = () => {
   return (
     <div className="bg-[#121212] text-white">
       <ToastContainer />
-
       {/* Hero Section */}
       <div className="relative flex flex-col-reverse items-center lg:flex-row">
         {/* Image Section */}
@@ -90,30 +95,33 @@ const Unisex = () => {
         <h2 className="mb-6 text-center text-2xl font-semibold">STYLES</h2>
 
         {/* Products Grid */}
-        <div className="mx-auto grid max-w-screen-lg grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {products.length > 0 ? (
-            products.map((product) => (
+        {products.length > 0 ? (
+          <div className="mx-auto grid max-w-screen-lg grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {products.map((product) => (
               <div key={product.id} className="flex flex-col rounded bg-gray-800">
                 <div className="flex-1">
                   <img
                     src={product.image}
                     alt={product.title}
-                    className="h-[350px] w-[350px] rounded object-contain"
+                    className="h-[350px] w-full object-contain rounded-t"
                     loading="lazy"
                   />
                 </div>
-                <div className="mt-4 bg-[rgba(0,0,0,0.5)] px-6 py-6">
+                <div className="mt-4 bg-[rgba(0,0,0,0.5)] px-6 py-6 rounded-b">
                   <h3 className="text-lg font-bold">{product.title}</h3>
-                  <button className="mt-2 rounded-full bg-[#D87D4A] px-6 py-3 text-white transition hover:bg-[#e08a55]">
-                    Explore
-                  </button>
+                  <p className="mt-2 text-sm text-gray-300">${parseFloat(product.price).toFixed(2)}</p>
+                  <Link href={`/customize/${product.slug}`}>
+                    <button className="mt-4 w-full rounded-full bg-[#D87D4A] px-6 py-3 text-white transition hover:bg-[#e08a55]">
+                      Explore
+                    </button>
+                  </Link>
                 </div>
               </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500">No unisex products available.</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-300">No products available at the moment.</p>
+        )}
       </div>
     </div>
   );
