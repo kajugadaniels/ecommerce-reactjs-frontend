@@ -353,88 +353,88 @@ const Customize = () => {
     )
 };
 
-    // RelatedProducts Component
-    interface RelatedProductsProps {
-        categorySlug: string;
-        currentProductId: number;
+// RelatedProducts Component
+interface RelatedProductsProps {
+    categorySlug: string;
+    currentProductId: number;
+}
+
+const RelatedProducts: React.FC<RelatedProductsProps> = ({ categorySlug, currentProductId }) => {
+    const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchRelatedProducts = async () => {
+            setLoading(true);
+            try {
+                const response = await getProducts({
+                    category: categorySlug,
+                    ordering: '-created_at',
+                    limit: 4, // Adjust the limit as needed
+                });
+                if (response.status === 200) {
+                    // Exclude the current product from related products
+                    const related = response.data.results.filter(
+                        (item: Product) => item.id !== currentProductId
+                    ).slice(0, 3); // Limit to 3 related products
+                    setRelatedProducts(related);
+                } else {
+                    toast.error(response.data.error || 'Failed to fetch related products.');
+                }
+            } catch (error: any) {
+                toast.error(error.response?.data?.error || 'An error occurred while fetching related products.');
+                console.error('Fetch Related Products Error:', error.response || error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRelatedProducts();
+    }, [categorySlug, currentProductId]);
+
+    if (loading) {
+        return <p className="text-center text-gray-700">Loading related products...</p>;
     }
 
-    const RelatedProducts: React.FC<RelatedProductsProps> = ({ categorySlug, currentProductId }) => {
-        const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
-        const [loading, setLoading] = useState<boolean>(false);
+    if (relatedProducts.length === 0) {
+        return <p className="text-center text-gray-700">No related products found.</p>;
+    }
 
-        useEffect(() => {
-            const fetchRelatedProducts = async () => {
-                setLoading(true);
-                try {
-                    const response = await getProducts({
-                        category: categorySlug,
-                        ordering: '-created_at',
-                        limit: 4, // Adjust the limit as needed
-                    });
-                    if (response.status === 200) {
-                        // Exclude the current product from related products
-                        const related = response.data.results.filter(
-                            (item: Product) => item.id !== currentProductId
-                        ).slice(0, 3); // Limit to 3 related products
-                        setRelatedProducts(related);
-                    } else {
-                        toast.error(response.data.error || 'Failed to fetch related products.');
-                    }
-                } catch (error: any) {
-                    toast.error(error.response?.data?.error || 'An error occurred while fetching related products.');
-                    console.error('Fetch Related Products Error:', error.response || error.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            fetchRelatedProducts();
-        }, [categorySlug, currentProductId]);
-
-        if (loading) {
-            return <p className="text-center text-gray-700">Loading related products...</p>;
-        }
-
-        if (relatedProducts.length === 0) {
-            return <p className="text-center text-gray-700">No related products found.</p>;
-        }
-
-        return (
-            <>
-                {relatedProducts.map((relatedProduct) => (
-                    <div
-                        key={relatedProduct.id}
-                        className="overflow-hidden font-sans bg-gray-300 rounded-lg shadow-md"
-                    >
-                        <div className="flex min-h-[256px] items-center justify-center">
-                            <img
-                                src={relatedProduct.image}
-                                alt={relatedProduct.title}
-                                className="object-contain w-full"
-                                loading="lazy"
-                            />
-                        </div>
-                        <div className="p-6 bg-white">
-                            <h3 className="text-[#D87D4A]">Customize</h3>
-                            <h3 className="text-gray-800">{relatedProduct.title}</h3>
-                            <p className="mt-2 text-sm text-gray-700">
-                                {relatedProduct.product_sizes.length} Sizes &middot; {relatedProduct.images.length} Images
-                            </p>
-                            <div className="mt-4 text-lg font-semibold text-gray-700">
-                                ${parseFloat(relatedProduct.price).toFixed(2)}
-                            </div>
-                            {/* Customize Button */}
-                            <Link href={`/customize/${relatedProduct.slug}`}>
-                                <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
-                                    Customize
-                                </button>
-                            </Link>
-                        </div>
+    return (
+        <>
+            {relatedProducts.map((relatedProduct) => (
+                <div
+                    key={relatedProduct.id}
+                    className="overflow-hidden font-sans bg-gray-300 rounded-lg shadow-md"
+                >
+                    <div className="flex min-h-[256px] items-center justify-center">
+                        <img
+                            src={relatedProduct.image}
+                            alt={relatedProduct.title}
+                            className="object-contain w-full"
+                            loading="lazy"
+                        />
                     </div>
-                ))}
-            </>
-        );
-    };
+                    <div className="p-6 bg-white">
+                        <h3 className="text-[#D87D4A]">Customize</h3>
+                        <h3 className="text-gray-800">{relatedProduct.title}</h3>
+                        <p className="mt-2 text-sm text-gray-700">
+                            {relatedProduct.product_sizes.length} Sizes &middot; {relatedProduct.images.length} Images
+                        </p>
+                        <div className="mt-4 text-lg font-semibold text-gray-700">
+                            ${parseFloat(relatedProduct.price).toFixed(2)}
+                        </div>
+                        {/* Customize Button */}
+                        <Link href={`/customize/${relatedProduct.slug}`}>
+                            <button className="mt-4 w-full rounded-full bg-[#D87D4A] py-2 text-white hover:bg-[#e08a55]">
+                                Customize
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            ))}
+        </>
+    );
+};
 
-    export default Customize;
+export default Customize;
